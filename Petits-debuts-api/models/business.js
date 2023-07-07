@@ -2,12 +2,17 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../database.js';
 
 export const  Business = sequelize.define('Business', {
-  title: {
-    type: DataTypes.STRING,
+  service: {
+    type: DataTypes.BOOLEAN,
     allowNull: false
   },
-  content: {
+  rating: {
+    type: DataTypes.DOUBLE,
+    allowNull: false
+  },
+  location: {
     type: DataTypes.TEXT,
     allowNull: false
   }
+
 });

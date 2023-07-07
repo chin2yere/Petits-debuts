@@ -2,32 +2,40 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../database.js';
 
 export const Product = sequelize.define('Product', {
-  name: {
+  product_name: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  email: {
+  category: {
     type: DataTypes.STRING,
+    allowNull: false
+  },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  price: {
+    type: DataTypes.DOUBLE,
     allowNull: false,
-    unique: true
+    
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
+  total_quantity: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
-  address: {
+  picture_url: {
     type: DataTypes.STRING,
     allowNull: false,
     
   },
-  businessOwner: {
+  service: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     
   },
-  location: {
-    type: DataTypes.STRING,
-    allowNull: false,
+  availability: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER),
+    allowNull: true,
     
   }
 });
