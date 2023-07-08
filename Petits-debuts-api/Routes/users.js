@@ -1,0 +1,87 @@
+import express from 'express';
+import bcrypt from 'bcrypt';
+import { User } from '../models/user.js';
+import { Op } from 'sequelize';
+import cors from 'cors';
+
+const router = express.Router();
+//route for post
+router.get('/user', async (req, res) => {
+    try {
+      const user = await User.findAll({
+        //include: [{ model: User, as: 'user' }],
+        order: [['createdAt', 'DESC']]
+      });
+      res.json(user);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+
+// Route for user registration
+router.post('/users', async (req, res) => {
+  const { name, email, password, address, businessOwner, location } = req.body;
+  console.log('Received registration request:', { name, email, password, address, businessOwner, location });
+
+
+  try {
+    // Check if username or email already exists
+    const existingUser = await User.findOne({
+      where: {
+        [Op.or]: [{ name }, { email }]
+      }
+    });
+
+    if (existingUser) {
+      return res.status(400).json({ error: 'Username or email already exists' });
+    }
+
+    // Encrypt the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = await User.create({ name, email,  password: hashedPassword, address, businessOwner, location });
+
+    // Set the user in the session
+    req.session.user = newUser;
+
+    // Return the user data in the response
+    res.json({ user: newUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Route for user login
+router.post('/users/login', async (req, res) => {
+  const { name, password } = req.body;
+  
+
+  try {
+    // Find the user by username
+    const user = await User.findOne({ where: { name } });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    // Compare the password
+    const isValidPassword = await bcrypt.compare(password, user.password);
+
+    if (!isValidPassword) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    // Set the user in the session
+    req.session.user = user;
+
+    // Return the user data in the response
+    res.json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+export default router;
