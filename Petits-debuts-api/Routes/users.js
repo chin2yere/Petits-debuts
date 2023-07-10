@@ -21,7 +21,7 @@ router.get('/user', async (req, res) => {
 // Route for user registration
 router.post('/users', async (req, res) => {
   const { name, email, password, address, businessOwner, location } = req.body;
-  console.log('Received registration request:', { name, email, password, address, businessOwner, location });
+  //console.log('Received registration request:', { name, email, password, address, businessOwner, location });
 
 
   try {
@@ -37,10 +37,10 @@ router.post('/users', async (req, res) => {
     }
 
     // Encrypt the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    //const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
-    const newUser = await User.create({ name, email,  password: hashedPassword, address, businessOwner, location });
+    const newUser = await User.create({ name, email,  password, address, businessOwner, location });
 
     // Set the user in the session
     req.session.user = newUser;
@@ -55,33 +55,34 @@ router.post('/users', async (req, res) => {
 
 // Route for user login
 router.post('/users/login', async (req, res) => {
-  const { name, password } = req.body;
+    const { name, password } = req.body;
   
-
-  try {
-    // Find the user by username
-    const user = await User.findOne({ where: { name } });
-
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+    try {
+      // Find the user by username
+      const user = await User.findOne({ where: { name } });
+  
+      if (!user) {
+        return res.status(401).json({ error: 'Invalid username' });
+      }
+  
+      // Compare the password
+      //const isValidPassword = await bcrypt.compare(password, user.password);
+      const isValidPassword = password === user.password;
+  
+      if (!isValidPassword) {
+        return res.status(401).json({ error: 'Invalid password' });
+      }
+  
+      // Set the user in the session if using session middleware
+      req.session.user = user; // Assuming session middleware is properly configured
+  
+      // Return the user data in the response
+      res.json({ user });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Login failed. Please try again.' });
     }
-
-    // Compare the password
-    const isValidPassword = await bcrypt.compare(password, user.password);
-
-    if (!isValidPassword) {
-      return res.status(401).json({ error: 'Invalid username or password' });
-    }
-
-    // Set the user in the session
-    req.session.user = user;
-
-    // Return the user data in the response
-    res.json({ user });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
+  });
+  
 
 export default router;

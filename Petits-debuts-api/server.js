@@ -41,7 +41,7 @@ sessionStore.sync();
 
 app.use(router);
 
-// Route to get all posts, with associated users
+// Route to get all business, with associated users
 app.get('/business', async (req, res) => {
   try {
     const business = await Business.findAll({
@@ -49,6 +49,42 @@ app.get('/business', async (req, res) => {
       order: [['createdAt', 'DESC']]
     });
     res.json(business);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+//route to get all products
+app.get('/product', async (req, res) => {
+  try {
+    const product = await Product.findAll({
+      include: [{ model: Business, as: 'business' }],
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+//route to get all orders
+app.get('/order', async (req, res) => {
+  try {
+    const order = await Order.findAll({
+      include: [{ model: User, as: 'user' }],
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+//route to get all carts
+app.get('/cart', async (req, res) => {
+  try {
+    const cart = await Cart.findAll({
+      include: [{ model: User, as: 'user' }],
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(cart);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
