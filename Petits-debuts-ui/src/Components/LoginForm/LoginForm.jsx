@@ -15,21 +15,27 @@ const LoginForm = () => {
 
     try {
       // Make the login API request
+      
       const response = await fetch(`http://localhost:3000/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-       body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password }),
         credentials: 'include'
       });
+      
 
       if (response.ok) {
+        
         const data = await response.json();
+
         const loggedInUser = data.user;
+        
 
         // Update the user context
         updateUser(loggedInUser);
+        
 
         // Navigate to the home page after successful login
         navigate('/');
