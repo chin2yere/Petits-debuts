@@ -1,15 +1,15 @@
-import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './SignupForm.css'
-import { UserContext } from '../../UserContext.js';
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./SignupForm.css";
+import { UserContext } from "../../UserContext.js";
 
 const SignupForm = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [address, setAddress] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
   const [businessOwner, setBusinessOwner] = useState(false);
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
 
   const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -20,38 +20,45 @@ const SignupForm = () => {
     try {
       // Make the signup API request
       const response = await fetch(`http://localhost:3000/users`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, password, address, businessOwner, location }),
-        credentials: 'include'
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          address,
+          businessOwner,
+          location,
+        }),
+        credentials: "include",
       });
 
       if (response.ok) {
         const data = await response.json();
         const loggedInUser = data.user;
 
-        console.log('Signup successful');
+        console.log("Signup successful");
 
         // Reset form fields
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setAddress('');
-        setLocation('');
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setAddress("");
+        setLocation("");
         // Update the user context
         updateUser(loggedInUser);
 
         // Navigate to the home page after successful login
-        navigate('/');
+        navigate("/");
       } else {
         // Handle signup failure case
-        alert('Signup failed');
+        alert("Signup failed");
       }
     } catch (error) {
       // Handle any network or API request errors
-      alert('Signup failed: ' + error);
+      alert("Signup failed: " + error);
     }
   };
 
@@ -99,7 +106,7 @@ const SignupForm = () => {
             required
           />
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="location">Location:</label>
           <input
