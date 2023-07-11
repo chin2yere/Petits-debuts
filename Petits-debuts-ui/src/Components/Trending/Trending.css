@@ -1,0 +1,36 @@
+  .trending{
+    align-items: center;
+    width: 100%;
+  }
+  .card-trending {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    background-color: grey;
+    border-radius: 15px;
+    height: 550px;
+   
+
+  }
+  
+  .card:hover {
+    transform: scale(1.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .container {
+    padding: 2px 16px;
+  }
+  .row-trending {
+    display: flex;
+    width: 100%;
+  }
+  .leftcol-trending {
+    flex: 50%;
+  }
+  .rightcol-trending {
+    flex: 50%;
+  }
+  .button-trending {
+    border-radius: 5px;
+    border-color: greenyellow;
+  }

@@ -2,6 +2,9 @@ import "./Main.css"
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../UserContext.js";
 import { Link } from "react-router-dom";
+import Trending from "../Trending/Trending";
+import Search from "../Search/Search";
+import ProductGrid from "../ProductGrid/ProductGrid";
 
 function Main() {
     const { user, updateUser } = useContext(UserContext);
@@ -30,7 +33,7 @@ function Main() {
   
     const handleSubmit = async (event) => {
       event.preventDefault();
-      const response = await fetch('http://localhost:3001/business', {
+      const response = await fetch('http://localhost:3000/business', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -60,7 +63,7 @@ function Main() {
           )}
         </div>
       </header>
-        <form className="new-post-form" onSubmit={handleSubmit}>
+        {/* <form className="new-post-form" onSubmit={handleSubmit}>
             <input
                 type="text"
                 name="title"
@@ -75,7 +78,22 @@ function Main() {
                 onChange={handleChange}
             />
             <button type="submit">Submit</button>
-        </form>
+        </form> */}
+        <div className="row-trending-main">
+        <Trending/>
+
+        </div>
+        <div className="row-search-main">
+          <Search/>
+          
+          
+        </div>
+        <div>
+          <ProductGrid/>
+
+        </div>
+        
+        
         <div className="posts-container">
           {business.map((business) => (
           <div className="post" key={business.id}>

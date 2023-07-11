@@ -5,7 +5,7 @@
         "description": "Finely knit stuffed animals, made with the finest wool.",
         "price": 20.99,
         "total_quantity": 50,
-        "picture_url": "https://example.com/product1.jpg",
+        "picture_url": "/Pictures/custom-products.png",
         "service": false,
         "businessId": 1
         
@@ -15,7 +15,7 @@
         "category": "Tutoring",
         "description": "Get geometry help today, ace that class with Ben's help.",
         "price": 30.00,
-        "picture_url": "https://example.com/product2.jpg",
+        "picture_url": "/Pictures/tutoring.jpg",
         "service": true,
         "availability": [13,15,17,19,21,23,25,27,29],
         "businessId": 2
@@ -25,7 +25,7 @@
         "category": "Hair & nails",
         "description": "This is to all my ladies/guys! Come get your hair done at affordable prices.",
         "price": 109.50,
-        "picture_url": "https://example.com/product3.jpg",
+        "picture_url": "/Pictures/hair-and-nails.jpg",
         "service": true,
         "availability": [13,15,17,19,21,23,25,27,29],
         "businessId": 3
@@ -36,7 +36,7 @@
         "description": "Custom made tee shirts of itch-free material.",
         "price": 19.00,
         "total_quantity": 75,
-        "picture_url": "https://example.com/product4.jpg",
+        "picture_url": "/Pictures/clothes-and-shoes.png",
         "service": false,
         "businessId": 4
     },
@@ -46,7 +46,7 @@
         "description": "Nigerian jollof rice fresh from the pot.",
         "price": 30.00,
         "total_quantity": 200,
-        "picture_url": "https://example.com/product5.jpg",
+        "picture_url": "/Pictures/food.avif",
         "service": false,
         "businessId": 1
     },
@@ -55,7 +55,7 @@
         "category": "Photography",
         "description": "Get your graduation pictures at affordable prices.",
         "price": 209.00,
-        "picture_url": "https://example.com/product6.jpg",
+        "picture_url": "/Pictures/photography.jpeg",
         "service": true,
         "availability": [12,14,16,18,20,22,24,26,28,30],
         "businessId": 3
@@ -67,7 +67,7 @@
         "description": "Keyholder made with beads.",
         "price": 10.99,
         "total_quantity": 50,
-        "picture_url": "https://example.com/product1.jpg",
+        "picture_url": "/Pictures/custom-products.png",
         "service": false,
         "businessId": 1
     },
@@ -76,7 +76,7 @@
         "category": "Tutoring",
         "description": "Get Chemistry help today, ace that class with Belle's help.",
         "price": 35.00,
-        "picture_url": "https://example.com/product2.jpg",
+        "picture_url": "/Pictures/tutoring.jpg",
         "service": true,
         "availability": [12,14,16,18,20,22,24,26,28,30],
         "businessId": 3
@@ -86,7 +86,7 @@
         "category": "Hair & nails",
         "description": "This is to all my ladies/guys! Come get your nails done at affordable prices.",
         "price": 59.50,
-        "picture_url": "https://example.com/product3.jpg",
+        "picture_url": "/Pictures/hair-and-nails.jpg",
         "service": true,
         "availability": [12,14,16,18,20,22,24,26,28,30],
         "businessId": 2
@@ -97,7 +97,7 @@
         "description": "Custom made shoes shirts of softly padded material.",
         "price": 39.00,
         "total_quantity": 35,
-        "picture_url": "https://example.com/product4.jpg",
+        "picture_url": "/Pictures/clothes-and-shoes.png",
         "service": false,
         "businessId": 4
       },
@@ -107,7 +107,7 @@
         "description": "Ghanian jollof rice fresh from the pot.",
         "price": 20.00,
         "total_quantity": 100,
-        "picture_url": "https://example.com/product5.jpg",
+        "picture_url": "/Pictures/food.avif",
         "service": false,
         "businessId": 4
       },
@@ -116,7 +116,7 @@
         "category": "Photography",
         "description": "Get your pictures at affordable prices.",
         "price": 209.00,
-        "picture_url": "https://example.com/product6.jpg",
+        "picture_url": "/Pictures/photography.jpeg",
         "service": true,
         "availability": [13,15,17,19,21,23,25,27,29],
         "businessId": 5
@@ -128,7 +128,7 @@
         "description": "Jewelry box made with fine wire and cloth.",
         "price": 50.99,
         "total_quantity": 40,
-        "picture_url": "https://example.com/product1.jpg",
+        "picture_url": "/Pictures/custom-products.png",
         "service": false,
         "businessId": 6
       },
@@ -137,7 +137,7 @@
         "category": "Tutoring",
         "description": "Get Physics help today, ace that class with James' help.",
         "price": 35.00,
-        "picture_url": "https://example.com/product2.jpg",
+        "picture_url": "/Pictures/tutoring.jpg",
         "service": true,
         "availability": [13,15,17,19,21,23,25,27,29],
         "businessId": 5
@@ -147,7 +147,7 @@
         "category": "Hair & nails",
         "description": "This is to all my ladies/guys! Come get your hair done at awesome prices.",
         "price": 139.50,
-        "picture_url": "https://example.com/product3.jpg",
+        "picture_url": "/Pictures/hair-and-nails.jpg",
         "service": true,
         "availability": [13,15,17,19,21,23,25,27,29],
         "businessId": 7
@@ -158,7 +158,7 @@
         "description": "Custom made shoes shirts of softly padded material.",
         "price": 49.00,
         "total_quantity": 35,
-        "picture_url": "https://example.com/product4.jpg",
+        "picture_url": "/Pictures/clothes-and-shoes.png",
         "service": false,
         "businessId": 6
       },
@@ -168,7 +168,7 @@
         "description": "Nigerian jollof rice fresh from the pot.",
         "price": 30.00,
         "total_quantity": 200,
-        "picture_url": "https://example.com/product5.jpg",
+        "picture_url": "/Pictures/food.avif",
         "service": false,
         "businessId": 6
       },
@@ -177,7 +177,7 @@
         "category": "Photography",
         "description": "Get your pictures at affordable prices.",
         "price": 259.00,
-        "picture_url": "https://example.com/product6.jpg",
+        "picture_url": "/Pictures/photography.jpeg",
         "service": true,
         "availability": [13,15,17,19,21,23,25,27,29],
         "businessId": 7
@@ -189,7 +189,7 @@
         "description": "Finely knit hoodies, made with the finest wool.",
         "price": 50.99,
         "total_quantity": 30,
-        "picture_url": "https://example.com/product1.jpg",
+        "picture_url": "/Pictures/custom-products.png",
         "service": false,
         "businessId": 8
     },
@@ -199,7 +199,7 @@
         "description": "Finely crafted fine wire with beautiful metal.",
         "price": 20.99,
         "total_quantity": 50,
-        "picture_url": "https://example.com/product1.jpg",
+        "picture_url": "/Pictures/custom-products.png",
         "service": false,
         "businessId": 8
     }

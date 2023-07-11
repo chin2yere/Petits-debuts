@@ -1,47 +1,63 @@
 [
     {
+        "name": "Felicia's enterprise",
+        "picture_url": "/Pictures/business-background.jpeg",
         "service": true,
         "rating": 3.7,
         "location": "Pennsylvania",
         "userId": 1
     },
     {
+        "name": "Brandon's enterprise",
+        "picture_url": "/Pictures/business-background.jpeg",
         "service": false,
         "rating": 3.9,
         "location": "New York",
         "userId": 3
     },
     {
+        "name": "Ibitoye ventures",
+        "picture_url": "/Pictures/business-background.jpeg",
         "service": true,
         "rating": 3.5,
         "location": "Delaware",
         "userId": 5
     },
     {
+        "name": "Harmony heights",
+        "picture_url": "/Pictures/business-background.jpeg",
         "service": false,
         "rating": 4.0,
         "location": "Baltimore",
         "userId": 9
     },
     {
+        "name": "Serene havens",
+        "picture_url": "/Pictures/business-background.jpeg",
         "service": true,
         "rating": 3.6,
         "location": "Maryland",
         "userId": 7
     },
     {
+        "name": "Happy place",
+        "picture_url": "/Pictures/business-background.jpeg",
         "service": false,
         "rating": 3.8,
         "location": "New Jersey",
         "userId": 9
     },
     {
+        "name": "Friendsz",
+        "picture_url": "/Pictures/business-background.jpeg",
         "service": true,
         "rating": 4.0,
         "location": "Pennsylvania",
         "userId": 1
     },
     {
+        "name": "Community enterprise",
+        "picture_url": "/Pictures/business-background.jpeg",
         "service": false,
         "rating": 3.4,
         "location": "Delaware",

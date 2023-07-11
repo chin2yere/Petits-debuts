@@ -1,0 +1,25 @@
+.search {
+    text-align: center;
+  }
+  .searchBar {
+    width: 500px;
+    height: 40px;
+    border-radius: 8px;
+  }
+  .searchBarButton {
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: rgb(118, 76, 117);
+  }
+  .row-search{
+    display:flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+  .filter-button{
+    margin-left: 380px;
+    width: 200px;
+    background-color: rgb(51, 108, 108);
+  }

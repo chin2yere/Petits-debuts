@@ -20,7 +20,8 @@ router.get('/user', async (req, res) => {
 
 // Route for user registration
 router.post('/users', async (req, res) => {
-  const { name, email, password, address, businessOwner, location } = req.body;
+  console.log(req);
+  const { username, email, password, address, businessOwner, location } = req.body;
   //console.log('Received registration request:', { name, email, password, address, businessOwner, location });
 
 
@@ -28,7 +29,7 @@ router.post('/users', async (req, res) => {
     // Check if username or email already exists
     const existingUser = await User.findOne({
       where: {
-        [Op.or]: [{ name }, { email }]
+        [Op.or]: [{ name: username }, { email }]
       }
     });
 
@@ -40,7 +41,7 @@ router.post('/users', async (req, res) => {
     
 
     // Create a new user
-    const newUser = await User.create({ name, email,  password, address, businessOwner, location });
+    const newUser = await User.create({ name:username, email,  password, address, businessOwner, location });
 
     // Set the user in the session
     req.session.user = newUser;
