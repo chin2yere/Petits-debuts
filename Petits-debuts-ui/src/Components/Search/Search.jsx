@@ -7,6 +7,7 @@ export default function Search({
   setSelectedCategory,
   search,
   setSearch,
+  runSearch,
 }) {
   const [filterOn, setFilterOn] = useState(false);
   const [filterButtonColor, setFilterButtonColor] = useState("filter-button");
@@ -51,12 +52,21 @@ export default function Search({
           <input
             className="searchBar"
             type="text"
-            placeholder="type here"
+            placeholder="search by name or location"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              runSearch(search);
+            }}
           />
-
-          <button className="searchBarButton">Search</button>
+          <button
+            onClick={() => {
+              runSearch(search);
+            }}
+            className="searchBarButton"
+          >
+            Search
+          </button>
           <button onClick={() => checkFilter()} className={filterButtonColor}>
             Filter
           </button>
@@ -138,77 +148,6 @@ export default function Search({
             </li>
           </ul>
         </div>
-        {/* location */}
-        {/* <div className="row-search">
-          <ul>
-            <li className="label-search">
-              <h3>Filter by location</h3>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setSelectedLocation("All locations");
-                }}
-              >
-                All locations
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setSelectedLocation("Pennsylvania");
-                }}
-              >
-                Pennsylvania
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setSelectedLocation("New York");
-                }}
-              >
-                New York
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setSelectedLocation("Delaware");
-                }}
-              >
-                Delaware
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setSelectedLocation("Baltimore");
-                }}
-              >
-                Baltimore
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setSelectedLocation("Maryland");
-                }}
-              >
-                Maryland
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setSelectedLocation("New jersey");
-                }}
-              >
-                New Jersey
-              </button>
-            </li>
-          </ul>
-        </div> */}
       </div>
     );
   } else {
@@ -218,11 +157,21 @@ export default function Search({
           <input
             className="searchBar"
             type="text"
-            placeholder="type here"
+            placeholder="search by name or location"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              runSearch(search);
+            }}
           />
-          <button className="searchBarButton">Search</button>
+          <button
+            onClick={() => {
+              runSearch(search);
+            }}
+            className="searchBarButton"
+          >
+            Search
+          </button>
           <button onClick={() => checkFilter()} className={filterButtonColor}>
             Filter
           </button>
