@@ -10,6 +10,8 @@ import photography from "../Pictures/photography.jpeg";
 import tutoring from "../Pictures/tutoring.jpg";
 
 export default function ProductGrid({
+  product,
+  setProduct,
   selectedCategory,
   setSelectedCategory,
   selectedLocation,
@@ -17,7 +19,6 @@ export default function ProductGrid({
   filterProductsByCategory,
   filterProductsByLocation,
 }) {
-  const [product, setProduct] = useState([]);
   //const [url, setUrl] = useState("");
   useEffect(() => {
     const fetchProduct = async () => {

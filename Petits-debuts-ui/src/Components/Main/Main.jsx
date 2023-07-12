@@ -11,6 +11,8 @@ function Main() {
   const [business, setBusiness] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All categories");
   const [selectedLocation, setSelectedLocation] = useState("All locations");
+  const [product, setProduct] = useState([]);
+  const [search, setSearch] = useState("");
 
   const [form, setForm] = useState({
     title: "",
@@ -112,10 +114,14 @@ function Main() {
         <Search
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
+          search={search}
+          setSearch={setSearch}
         />
       </div>
       <div>
         <ProductGrid
+          product={product}
+          setProduct={setProduct}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           selectedLocation={selectedLocation}
