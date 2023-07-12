@@ -14,10 +14,7 @@ export default function ProductGrid({
   setProduct,
   selectedCategory,
   setSelectedCategory,
-  selectedLocation,
-  setSelectedLocation,
   filterProductsByCategory,
-  filterProductsByLocation,
 }) {
   //const [url, setUrl] = useState("");
   useEffect(() => {

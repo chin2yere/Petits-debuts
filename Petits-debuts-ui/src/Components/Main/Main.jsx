@@ -8,7 +8,7 @@ import ProductGrid from "../ProductGrid/ProductGrid";
 
 function Main() {
   const { user, updateUser } = useContext(UserContext);
-  const [business, setBusiness] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All categories");
   const [selectedLocation, setSelectedLocation] = useState("All locations");
   const [product, setProduct] = useState([]);
@@ -21,12 +21,12 @@ function Main() {
   });
 
   useEffect(() => {
-    const fetchBusiness = async () => {
-      const response = await fetch("http://localhost:3000/business");
+    const fetchAllProducts = async () => {
+      const response = await fetch("http://localhost:3000/product");
       const data = await response.json();
-      setBusiness(data);
+      setAllProducts(data);
     };
-    fetchBusiness();
+    fetchAllProducts();
   }, []);
 
   const handleChange = (event) => {
@@ -76,6 +76,26 @@ function Main() {
     });
     return filteredData;
   }
+  //search based on name or location
+  function runSearch(text) {
+    if (text != "") {
+      const inputText = text.toLowerCase();
+      const newProduct = allProducts.filter((product) => {
+        if (
+          product.product_name.toLowerCase().includes(inputText) ||
+          product.business.location.toLowerCase().includes(inputText)
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      console.log(newProduct);
+      setProduct(newProduct);
+    } else if (text === "") {
+      setProduct(allProducts);
+    }
+  }
 
   return (
     <div className="main">
@@ -91,22 +111,6 @@ function Main() {
           )}
         </div>
       </header>
-      {/* <form className="new-post-form" onSubmit={handleSubmit}>
-            <input
-                type="text"
-                name="title"
-                placeholder="Title"
-                value={form.title}
-                onChange={handleChange}
-            />
-            <textarea
-                name="content"
-                placeholder="Content"
-                value={form.content}
-                onChange={handleChange}
-            />
-            <button type="submit">Submit</button>
-        </form> */}
       <div className="row-trending-main">
         <Trending />
       </div>
@@ -116,6 +120,7 @@ function Main() {
           setSelectedCategory={setSelectedCategory}
           search={search}
           setSearch={setSearch}
+          runSearch={runSearch}
         />
       </div>
       <div>
@@ -124,24 +129,8 @@ function Main() {
           setProduct={setProduct}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
-          selectedLocation={selectedLocation}
-          setSelectedLocation={setSelectedLocation}
           filterProductsByCategory={filterProductsByCategory}
-          filterProductsByLocation={filterProductsByLocation}
         />
-      </div>
-
-      <div className="posts-container">
-        {business.map((business) => (
-          <div className="post" key={business.id}>
-            <h2>{business.location}</h2>
-            <h4>
-              By {business.user.name} at{" "}
-              {new Date(business.createdAt).toLocaleString()}
-            </h4>
-            <p>{business.rating}</p>
-          </div>
-        ))}
       </div>
     </div>
   );
