@@ -2,7 +2,12 @@ import * as React from "react";
 import "./Search.css";
 import { useState, useEffect } from "react";
 
-export default function Search({ selectedCategory, setSelectedCategory }) {
+export default function Search({
+  selectedCategory,
+  setSelectedCategory,
+  search,
+  setSearch,
+}) {
   const [filterOn, setFilterOn] = useState(false);
   const [filterButtonColor, setFilterButtonColor] = useState("filter-button");
   function checkFilter() {
@@ -43,7 +48,14 @@ export default function Search({ selectedCategory, setSelectedCategory }) {
     return (
       <div className="search">
         <div className="row-search">
-          <input className="searchBar" type="text" placeholder="type here" />
+          <input
+            className="searchBar"
+            type="text"
+            placeholder="type here"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
           <button className="searchBarButton">Search</button>
           <button onClick={() => checkFilter()} className={filterButtonColor}>
             Filter
@@ -203,7 +215,13 @@ export default function Search({ selectedCategory, setSelectedCategory }) {
     return (
       <div className="search">
         <div className="row-search">
-          <input className="searchBar" type="text" placeholder="type here" />
+          <input
+            className="searchBar"
+            type="text"
+            placeholder="type here"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
           <button className="searchBarButton">Search</button>
           <button onClick={() => checkFilter()} className={filterButtonColor}>
             Filter
