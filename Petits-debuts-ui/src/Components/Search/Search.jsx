@@ -55,8 +55,9 @@ export default function Search({
             placeholder="search by name or location"
             value={search}
             onChange={(e) => {
-              setSearch(e.target.value);
-              runSearch(search);
+              const word = e.target.value;
+              setSearch(word);
+              runSearch(word);
             }}
           />
           <button
@@ -160,8 +161,9 @@ export default function Search({
             placeholder="search by name or location"
             value={search}
             onChange={(e) => {
-              setSearch(e.target.value);
-              runSearch(search);
+              const word = e.target.value;
+              setSearch(word);
+              runSearch(word);
             }}
           />
           <button

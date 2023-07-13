@@ -15,6 +15,8 @@ export default function ProductGrid({
   selectedCategory,
   setSelectedCategory,
   filterProductsByCategory,
+  cart,
+  updateCart,
 }) {
   //const [url, setUrl] = useState("");
   useEffect(() => {
@@ -51,6 +53,10 @@ export default function ProductGrid({
             description={product.description}
             category={product.category}
             price={product.price}
+            id={product.id}
+            service={product.service}
+            cart={cart}
+            updateCart={updateCart}
           />
         </div>
       ))}
