@@ -99,7 +99,7 @@ app.post("/mycart", async (req, res) => {
 
   try {
     // Check if cart already exists
-    const existingCart = await Cart.findOne({ userId: id });
+    const existingCart = await Cart.findOne({ where: { userId: id } });
 
     if (existingCart) {
       res.json({ usercart: existingCart });
