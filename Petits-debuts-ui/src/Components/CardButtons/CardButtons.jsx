@@ -1,6 +1,8 @@
 import * as React from "react";
 import "./CardButtons.css";
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function CardButtons({
   id,
@@ -9,7 +11,9 @@ export default function CardButtons({
   updateCart,
   personalCart,
   setPersonalCart,
+  availability,
 }) {
+  const [startDate, setStartDate] = useState(null);
   function plusBtn() {
     console.log({ id, service, cart, personalCart });
 
@@ -55,10 +59,39 @@ export default function CardButtons({
       return personalCart[id];
     }
   }
+  const isValidDate = (date) => {
+    const currentDate = new Date();
+    const dayFromDate = date.getDate();
+    const validity =
+      !(date < currentDate) && availability.includes(dayFromDate);
+
+    return validity;
+  };
+  const filterTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+    return !(currentDate.getDate() === selectedDate.getDate());
+  };
   if (service) {
     return (
       <div>
-        <button>Schedule here</button>
+        <div>
+          <button>Schedule here</button>
+          <DatePicker
+            className="custom-datepicker"
+            showTimeSelect
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            isClearable
+            filterDate={isValidDate}
+            filterTime={filterTime}
+            placeholderText="mm/dd/yyyy"
+            dateFormat="MMMM d, yyyy h:mm aa"
+          />
+        </div>
+        <div>
+          <h5>Note : Dates are not reserved until payment is made</h5>
+        </div>
       </div>
     );
   } else {

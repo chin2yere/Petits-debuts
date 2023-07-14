@@ -14,6 +14,7 @@ export default function ProductCard({
   updateCart,
   personalCart,
   setPersonalCart,
+  availability,
 }) {
   return (
     <div className="product-card">
@@ -42,6 +43,7 @@ export default function ProductCard({
           updateCart={updateCart}
           personalCart={personalCart}
           setPersonalCart={setPersonalCart}
+          availability={availability}
         />
       </div>
     </div>

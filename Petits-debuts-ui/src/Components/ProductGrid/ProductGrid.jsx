@@ -60,6 +60,7 @@ export default function ProductGrid({
             updateCart={updateCart}
             personalCart={personalCart}
             setPersonalCart={setPersonalCart}
+            availability={product.availability}
           />
         </div>
       ))}
