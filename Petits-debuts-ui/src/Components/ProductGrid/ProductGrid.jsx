@@ -17,6 +17,8 @@ export default function ProductGrid({
   filterProductsByCategory,
   cart,
   updateCart,
+  personalCart,
+  setPersonalCart,
 }) {
   useEffect(() => {
     const fetchProduct = async () => {
@@ -26,7 +28,7 @@ export default function ProductGrid({
     };
     fetchProduct();
   }, []);
-  console.log(product);
+
   function setProductUrl(category) {
     if (category === "Custom Products") {
       return customProduct;
@@ -56,6 +58,8 @@ export default function ProductGrid({
             service={product.service}
             cart={cart}
             updateCart={updateCart}
+            personalCart={personalCart}
+            setPersonalCart={setPersonalCart}
           />
         </div>
       ))}
