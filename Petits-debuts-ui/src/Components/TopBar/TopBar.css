@@ -1,0 +1,32 @@
+.row-top-bar {
+  display: flex;
+  margin-top: 50px;
+  background-color: rgb(105, 180, 231);
+}
+.col1-top-bar {
+  flex: 80%;
+}
+.col2-top-bar {
+  flex: 20%;
+  text-align: right;
+  margin-right: 10px;
+}
+.button-left {
+  width: 80%;
+  background-color: transparent;
+  outline: none;
+}
+.row-drop-down {
+  display: flex;
+  width: 60%;
+}
+.button-drop-down {
+  background-color: transparent;
+  width: 100%;
+  text-decoration: none;
+  background-color: inherit;
+}
+.col1-drop-down {
+  flex: 100%;
+  background-color: white;
+}

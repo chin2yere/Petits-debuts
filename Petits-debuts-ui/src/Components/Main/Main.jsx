@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import Trending from "../Trending/Trending";
 import Search from "../Search/Search";
 import ProductGrid from "../ProductGrid/ProductGrid";
+import TopBar from "../TopBar/TopBar";
 
 function Main() {
   const { user, updateUser } = useContext(UserContext);
+  const [cart, updateCart] = useState({});
   const [allProducts, setAllProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All categories");
-  const [selectedLocation, setSelectedLocation] = useState("All locations");
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -26,8 +27,42 @@ function Main() {
       const data = await response.json();
       setAllProducts(data);
     };
+    const fetchCart = async (id) => {
+      try {
+        // Make the signup API request
+        const response = await fetch(`http://localhost:3000/mycart`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+          }),
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const loggedInUserCart = data.usercart;
+
+          console.log("Cart access successful");
+
+          // Update the user context
+          updateCart(loggedInUserCart);
+        } else {
+          // Handle signup failure case
+          alert("Cart access failed");
+        }
+      } catch (error) {
+        // Handle any network or API request errors
+        alert("Signup failed: " + error);
+      }
+    };
+
     fetchAllProducts();
+    fetchCart(user.id);
   }, []);
+  console.log(cart);
 
   const handleChange = (event) => {
     setForm({
@@ -52,6 +87,9 @@ function Main() {
     // Perform logout logic here
     // Example: Clear user data from localStorage, reset user state, etc.
     updateUser(null);
+    updateCart({});
+    setAllProducts([]);
+    setProduct([]);
   };
 
   //filter by category
@@ -90,7 +128,7 @@ function Main() {
           return false;
         }
       });
-      console.log(newProduct);
+      console.log(text);
       setProduct(newProduct);
     } else if (text === "") {
       setProduct(allProducts);
@@ -99,38 +137,45 @@ function Main() {
 
   return (
     <div className="main">
-      <header className="header">
-        <div className="user-info">
-          {user ? (
-            <>
-              <span>Hi {user.name}! |</span>
-              <button onClick={handleLogout}>Logout</button>
-            </>
-          ) : (
-            <Link to="/login">Login</Link>
-          )}
+      <div className="topBar">
+        <header className="header">
+          <div className="user-info">
+            {user ? (
+              <>
+                <span>Hi {user.name}! |</span>
+                <button onClick={handleLogout}>Logout</button>
+              </>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
+          </div>
+        </header>
+        <TopBar />
+      </div>
+      <div className="content">
+        <div className="row-trending-main">
+          <Trending />
         </div>
-      </header>
-      <div className="row-trending-main">
-        <Trending />
-      </div>
-      <div className="row-search-main">
-        <Search
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          search={search}
-          setSearch={setSearch}
-          runSearch={runSearch}
-        />
-      </div>
-      <div>
-        <ProductGrid
-          product={product}
-          setProduct={setProduct}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          filterProductsByCategory={filterProductsByCategory}
-        />
+        <div className="row-search-main">
+          <Search
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            search={search}
+            setSearch={setSearch}
+            runSearch={runSearch}
+          />
+        </div>
+        <div>
+          <ProductGrid
+            product={product}
+            setProduct={setProduct}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            filterProductsByCategory={filterProductsByCategory}
+            cart={cart}
+            updateCart={updateCart}
+          />
+        </div>
       </div>
     </div>
   );

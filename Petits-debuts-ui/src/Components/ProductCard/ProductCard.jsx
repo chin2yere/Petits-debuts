@@ -1,5 +1,6 @@
 import * as React from "react";
 import "./Productcard.css";
+import CardButtons from "../CardButtons/CardButtons";
 
 export default function ProductCard({
   picture_url,
@@ -7,6 +8,10 @@ export default function ProductCard({
   description,
   category,
   price,
+  id,
+  service,
+  cart,
+  updateCart,
 }) {
   return (
     <div className="product-card">
@@ -27,6 +32,7 @@ export default function ProductCard({
           </div>
         </div>
       </div>
+      <div className="row-product-card"></div>
     </div>
   );
 }

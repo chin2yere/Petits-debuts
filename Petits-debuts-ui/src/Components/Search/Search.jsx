@@ -20,7 +20,7 @@ export default function Search({
       setFilterButtonColor("filter-button-active");
     }
   }
-  //button color manipulation. this could be done better
+  //button color manipulation.
   let allbtn = "li-button";
   let custombtn = "li-button";
   let tutorbtn = "li-button";
@@ -55,8 +55,9 @@ export default function Search({
             placeholder="search by name or location"
             value={search}
             onChange={(e) => {
-              setSearch(e.target.value);
-              runSearch(search);
+              const word = e.target.value;
+              setSearch(word);
+              runSearch(word);
             }}
           />
           <button
@@ -160,8 +161,9 @@ export default function Search({
             placeholder="search by name or location"
             value={search}
             onChange={(e) => {
-              setSearch(e.target.value);
-              runSearch(search);
+              const word = e.target.value;
+              setSearch(word);
+              runSearch(word);
             }}
           />
           <button
