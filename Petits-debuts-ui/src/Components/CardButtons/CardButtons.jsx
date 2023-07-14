@@ -2,28 +2,37 @@ import * as React from "react";
 import "./CardButtons.css";
 import { useState } from "react";
 
-export default function CardButtons({ id, service, cart, updateCart }) {
-  //id=id.toString();
-  const [personalCart, setPersonalCart] = useState(cart.cart);
-  
+export default function CardButtons({
+  id,
+  service,
+  cart,
+  updateCart,
+  personalCart,
+  setPersonalCart,
+}) {
   function plusBtn() {
-    
-    const keyExists = id in {personalCart};
+    console.log({ id, service, cart, personalCart });
+
+    const keyExists = id in personalCart;
     console.log(keyExists);
     if (keyExists === true) {
       const temp = { ...personalCart };
       temp[id] += 1;
       setPersonalCart(temp);
       //now update the cart object
-      
-
-    } else {
-      setPersonalCart({ ...personalCart, [id]: 1 });
-    }
-    const tempcart = { ...cart };
-      tempcart[cart] = personalCart;
+      const tempcart = { ...cart };
+      tempcart.cart = temp;
       updateCart(tempcart);
       console.log(tempcart);
+    } else {
+      const temporary = { ...personalCart, [id]: 1 };
+      setPersonalCart(temporary);
+      //now update the cart object
+      const tempcart = { ...cart };
+      tempcart.cart = temporary;
+      updateCart(tempcart);
+      console.log(tempcart);
+    }
   }
   function minusBtn() {
     const keyExists = id in personalCart;
@@ -31,13 +40,13 @@ export default function CardButtons({ id, service, cart, updateCart }) {
       const temp = { ...personalCart };
       temp[id] -= 1;
       setPersonalCart(temp);
-    }
-    const tempcart = { ...cart };
-      tempcart[cart] = personalCart;
+      //now update the cart
+      const tempcart = { ...cart };
+      tempcart.cart = temp;
       updateCart(tempcart);
-
+      console.log(tempcart);
+    }
   }
-
 
   function countValue() {
     if (!personalCart || !personalCart[id] || personalCart[id] <= 0) {

@@ -14,6 +14,7 @@ function Main() {
   const [selectedCategory, setSelectedCategory] = useState("All categories");
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
+  const [personalCart, setPersonalCart] = useState({});
 
   const [form, setForm] = useState({
     title: "",
@@ -49,6 +50,7 @@ function Main() {
 
           // Update the user context
           updateCart(loggedInUserCart);
+          setPersonalCart(loggedInUserCart.cart);
         } else {
           // Handle signup failure case
           alert("Cart access failed");
@@ -62,7 +64,6 @@ function Main() {
     fetchAllProducts();
     fetchCart(user.id);
   }, []);
-  console.log(cart);
 
   const handleChange = (event) => {
     setForm({
@@ -128,7 +129,7 @@ function Main() {
           return false;
         }
       });
-      console.log(text);
+
       setProduct(newProduct);
     } else if (text === "") {
       setProduct(allProducts);
@@ -174,6 +175,8 @@ function Main() {
             filterProductsByCategory={filterProductsByCategory}
             cart={cart}
             updateCart={updateCart}
+            personalCart={personalCart}
+            setPersonalCart={setPersonalCart}
           />
         </div>
       </div>
