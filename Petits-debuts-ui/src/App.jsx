@@ -39,7 +39,6 @@ function App() {
       <UserContext.Provider value={{ user, updateUser }}>
         <BrowserRouter>
           <Routes>
-            {/* <Route path="/" element={ <Main /> } /> */}
             <Route path="/" element={user ? <Main /> : <LoginForm />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignupForm />} />

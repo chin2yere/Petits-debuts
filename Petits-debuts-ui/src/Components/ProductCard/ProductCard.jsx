@@ -32,9 +32,7 @@ export default function ProductCard({
           </div>
         </div>
       </div>
-      <div className="row-product-card">
-        {/* <CardButtons id={id} service={service} cart={cart} updateCart={updateCart}/> */}
-      </div>
+      <div className="row-product-card"></div>
     </div>
   );
 }

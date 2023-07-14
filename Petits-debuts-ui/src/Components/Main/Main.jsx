@@ -12,7 +12,6 @@ function Main() {
   const [cart, updateCart] = useState({});
   const [allProducts, setAllProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All categories");
-  //const [selectedLocation, setSelectedLocation] = useState("All locations");
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -45,7 +44,6 @@ function Main() {
         if (response.ok) {
           const data = await response.json();
           const loggedInUserCart = data.usercart;
-          // console.log(data.usercart);
 
           console.log("Cart access successful");
 
@@ -175,7 +173,7 @@ function Main() {
             setSelectedCategory={setSelectedCategory}
             filterProductsByCategory={filterProductsByCategory}
             cart={cart}
-            setCart={updateCart}
+            updateCart={updateCart}
           />
         </div>
       </div>

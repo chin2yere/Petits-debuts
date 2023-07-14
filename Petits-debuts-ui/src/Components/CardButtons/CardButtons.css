@@ -1,0 +1,12 @@
+.row {
+  display: flex;
+  width: 100%;
+}
+.button-card {
+  border-radius: 5px;
+  border-color: greenyellow;
+}
+.incrementBtn {
+  color: black;
+  text-align: center;
+}

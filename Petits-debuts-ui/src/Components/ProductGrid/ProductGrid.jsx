@@ -18,7 +18,6 @@ export default function ProductGrid({
   cart,
   updateCart,
 }) {
-  //const [url, setUrl] = useState("");
   useEffect(() => {
     const fetchProduct = async () => {
       const response = await fetch("http://localhost:3000/product");

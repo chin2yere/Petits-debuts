@@ -1,37 +1,55 @@
 import * as React from "react";
 import "./CardButtons.css";
+import { useState } from "react";
 
 export default function CardButtons({ id, service, cart, updateCart }) {
+  //id=id.toString();
+  const [personalCart, setPersonalCart] = useState(cart.cart);
+  
   function plusBtn() {
-    const keyExists = name in tableArray;
+    
+    const keyExists = id in {personalCart};
+    console.log(keyExists);
     if (keyExists === true) {
-      const TableArray = { ...tableArray };
-      TableArray[name][0] += 1;
-      setTableArray(TableArray);
+      const temp = { ...personalCart };
+      temp[id] += 1;
+      setPersonalCart(temp);
+      //now update the cart object
+      
+
     } else {
-      increaseTable(name, [1, price]);
+      setPersonalCart({ ...personalCart, [id]: 1 });
     }
+    const tempcart = { ...cart };
+      tempcart[cart] = personalCart;
+      updateCart(tempcart);
+      console.log(tempcart);
   }
   function minusBtn() {
-    const keyExists = name in tableArray;
+    const keyExists = id in personalCart;
     if (keyExists === true) {
-      const TableArray = { ...tableArray };
-      TableArray[name][0] -= 1;
-      setTableArray(TableArray);
+      const temp = { ...personalCart };
+      temp[id] -= 1;
+      setPersonalCart(temp);
     }
+    const tempcart = { ...cart };
+      tempcart[cart] = personalCart;
+      updateCart(tempcart);
+
   }
 
-  function selectedIncrementValue() {
-    if (!tableArray || !tableArray[name] || tableArray[name][0] <= 0) {
+
+  function countValue() {
+    if (!personalCart || !personalCart[id] || personalCart[id] <= 0) {
       return "";
     } else {
-      return tableArray[name][0];
+      return personalCart[id];
     }
   }
   if (service) {
     return (
       <div>
-        <p>schedule button</p>
+        <button>Schedule here</button>
       </div>
     );
   } else {
@@ -44,7 +62,7 @@ export default function CardButtons({ id, service, cart, updateCart }) {
             </button>
             <button
               onClick={() => {
-                if (tableArray[name] && tableArray[name][0] != 0) {
+                if (personalCart[id] && personalCart[id] != 0) {
                   minusBtn();
                 }
               }}
@@ -53,7 +71,7 @@ export default function CardButtons({ id, service, cart, updateCart }) {
               <i className="material-icons">remove</i>
             </button>
           </div>
-          <p>{selectedIncrementValue()}</p>
+          <p>{countValue()}</p>
         </div>
       </div>
     );

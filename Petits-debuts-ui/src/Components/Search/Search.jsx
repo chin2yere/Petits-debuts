@@ -20,7 +20,7 @@ export default function Search({
       setFilterButtonColor("filter-button-active");
     }
   }
-  //button color manipulation. this could be done better
+  //button color manipulation.
   let allbtn = "li-button";
   let custombtn = "li-button";
   let tutorbtn = "li-button";

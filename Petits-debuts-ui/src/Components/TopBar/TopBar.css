@@ -18,9 +18,7 @@
 }
 .row-drop-down {
   display: flex;
-  /* background-color: white; */
   width: 60%;
-  /* align-items: left; */
 }
 .button-drop-down {
   background-color: transparent;

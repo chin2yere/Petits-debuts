@@ -110,10 +110,6 @@ app.post("/mycart", async (req, res) => {
         cart: cartPlaceHolder,
         total: totalPlaceHolder,
       });
-
-      // Set the user in the session
-      // req.session.user = newUser;
-
       // Return the user data in the response
       res.json({ usercart: newCart });
     }
