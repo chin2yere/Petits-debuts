@@ -1,6 +1,11 @@
 import "./Main.css";
 import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../UserContext.js";
+import {
+  UserContext,
+  CartContext,
+  ServiceContext,
+  ProductContext,
+} from "../../UserContext.js";
 import { Link } from "react-router-dom";
 import Trending from "../Trending/Trending";
 import Search from "../Search/Search";
@@ -9,12 +14,17 @@ import TopBar from "../TopBar/TopBar";
 
 function Main() {
   const { user, updateUser } = useContext(UserContext);
+  const { productContext, setProductContext } = useContext(ProductContext);
+  const { serviceContext, setServiceContext } = useContext(ServiceContext);
+  const { cartContext, setCartContext } = useContext(CartContext);
+
   const [cart, updateCart] = useState({});
   const [allProducts, setAllProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All categories");
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
   const [personalCart, setPersonalCart] = useState({});
+  const [serviceWallet, setServiceWallet] = useState({});
 
   const [form, setForm] = useState({
     title: "",
@@ -27,6 +37,7 @@ function Main() {
       const response = await fetch("http://localhost:3000/product");
       const data = await response.json();
       setAllProducts(data);
+      setProductContext(data);
     };
     const fetchCart = async (id) => {
       try {
@@ -91,6 +102,10 @@ function Main() {
     updateCart({});
     setAllProducts([]);
     setProduct([]);
+    setProductContext([]);
+    setCartContext({});
+    setServiceContext({});
+    setServiceWallet({});
   };
 
   //filter by category
@@ -151,7 +166,7 @@ function Main() {
             )}
           </div>
         </header>
-        <TopBar />
+        <TopBar personalCart={personalCart} serviceWallet={serviceWallet} />
       </div>
       <div className="content">
         <div className="row-trending-main">
@@ -177,6 +192,8 @@ function Main() {
             updateCart={updateCart}
             personalCart={personalCart}
             setPersonalCart={setPersonalCart}
+            serviceWallet={serviceWallet}
+            setServiceWallet={setServiceWallet}
           />
         </div>
       </div>

@@ -12,13 +12,13 @@ export default function CardButtons({
   personalCart,
   setPersonalCart,
   availability,
+  serviceWallet,
+  setServiceWallet,
 }) {
   const [startDate, setStartDate] = useState(null);
   function plusBtn() {
-    console.log({ id, service, cart, personalCart });
-
     const keyExists = id in personalCart;
-    console.log(keyExists);
+
     if (keyExists === true) {
       const temp = { ...personalCart };
       temp[id] += 1;
@@ -27,7 +27,6 @@ export default function CardButtons({
       const tempcart = { ...cart };
       tempcart.cart = temp;
       updateCart(tempcart);
-      console.log(tempcart);
     } else {
       const temporary = { ...personalCart, [id]: 1 };
       setPersonalCart(temporary);
@@ -35,7 +34,6 @@ export default function CardButtons({
       const tempcart = { ...cart };
       tempcart.cart = temporary;
       updateCart(tempcart);
-      console.log(tempcart);
     }
   }
   function minusBtn() {
@@ -44,11 +42,10 @@ export default function CardButtons({
       const temp = { ...personalCart };
       temp[id] -= 1;
       setPersonalCart(temp);
-      //now update the cart
+      //now update the cart object
       const tempcart = { ...cart };
       tempcart.cart = temp;
       updateCart(tempcart);
-      console.log(tempcart);
     }
   }
 
@@ -72,6 +69,26 @@ export default function CardButtons({
     const selectedDate = new Date(time);
     return !(currentDate.getDate() === selectedDate.getDate());
   };
+  function updateServiceWallet(date) {
+    if (date) {
+      const keyExists = id in serviceWallet;
+      if (keyExists) {
+        const tempwallet = { ...serviceWallet };
+        tempwallet[id] = date;
+        setServiceWallet(tempwallet);
+      } else {
+        const temporary = { ...serviceWallet, [id]: date };
+        setServiceWallet(temporary);
+      }
+    } else {
+      const keyExists = id in serviceWallet;
+      if (keyExists) {
+        const tempwallet = { ...serviceWallet };
+        tempwallet[id] = date;
+        setServiceWallet(tempwallet);
+      }
+    }
+  }
   if (service) {
     return (
       <div>
@@ -81,7 +98,10 @@ export default function CardButtons({
             className="custom-datepicker"
             showTimeSelect
             selected={startDate}
-            onChange={(date) => setStartDate(date)}
+            onChange={(date) => {
+              setStartDate(date);
+              updateServiceWallet(date);
+            }}
             isClearable
             filterDate={isValidDate}
             filterTime={filterTime}

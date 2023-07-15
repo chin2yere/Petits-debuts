@@ -1,12 +1,23 @@
 import * as React from "react";
 import "./TopBar.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import {
+  CartContext,
+  ServiceContext,
+  ProductContext,
+} from "../../UserContext.js";
 import { Link } from "react-router-dom";
 
-export default function TopBar() {
+export default function TopBar({ personalCart, serviceWallet }) {
+  const { setServiceContext } = useContext(ServiceContext);
+  const { setCartContext } = useContext(CartContext);
   const [toggleOn, setToggleOn] = useState(false);
   function toggleMenu() {
     setToggleOn(!toggleOn);
+  }
+  function setCartNecessities() {
+    setCartContext(personalCart);
+    setServiceContext(serviceWallet);
   }
   if (toggleOn) {
     return (
@@ -24,7 +35,7 @@ export default function TopBar() {
           </div>
           <div className="col2-top-bar">
             <Link to="/cart">
-              <button>cart</button>
+              <button onClick={() => setCartNecessities()}>cart</button>
             </Link>
           </div>
         </div>
@@ -46,7 +57,12 @@ export default function TopBar() {
               </Link>
               <Link to="/cart">
                 <li className="row-drop-down">
-                  <button className="button-drop-down">Cart</button>
+                  <button
+                    onClick={() => setCartNecessities()}
+                    className="button-drop-down"
+                  >
+                    Cart
+                  </button>
                 </li>
               </Link>
             </ul>
@@ -54,24 +70,25 @@ export default function TopBar() {
         </div>
       </div>
     );
+  } else {
+    return (
+      <div className="row-top-bar">
+        <div className="col1-top-bar">
+          <button
+            onClick={() => {
+              toggleMenu();
+            }}
+            className="button-left"
+          >
+            Menu
+          </button>
+        </div>
+        <div className="col2-top-bar">
+          <Link to="/cart">
+            <button onClick={() => setCartNecessities()}>cart</button>
+          </Link>
+        </div>
+      </div>
+    );
   }
-  return (
-    <div className="row-top-bar">
-      <div className="col1-top-bar">
-        <button
-          onClick={() => {
-            toggleMenu();
-          }}
-          className="button-left"
-        >
-          Menu
-        </button>
-      </div>
-      <div className="col2-top-bar">
-        <Link to="/cart">
-          <button>cart</button>
-        </Link>
-      </div>
-    </div>
-  );
 }

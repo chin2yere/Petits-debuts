@@ -19,6 +19,8 @@ export default function ProductGrid({
   updateCart,
   personalCart,
   setPersonalCart,
+  serviceWallet,
+  setServiceWallet,
 }) {
   useEffect(() => {
     const fetchProduct = async () => {
@@ -61,6 +63,8 @@ export default function ProductGrid({
             personalCart={personalCart}
             setPersonalCart={setPersonalCart}
             availability={product.availability}
+            serviceWallet={serviceWallet}
+            setServiceWallet={setServiceWallet}
           />
         </div>
       ))}
