@@ -196,6 +196,27 @@ app.post("/cart/delete", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+//updatelikes
+
+app.post("/likes/update", async (req, res) => {
+  const { tempLikes, id } = req.body;
+
+  try {
+    // find the product
+    const product = await Product.findOne({ where: { id } });
+    if (product) {
+      const updatedProduct = await product.update({
+        likes: tempLikes,
+      });
+      res.json({ updatedProduct });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+//end
 
 sequelize
   .sync({ alter: true })

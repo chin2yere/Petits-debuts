@@ -1,23 +1,22 @@
-import { DataTypes } from 'sequelize';
-import { sequelize } from '../database.js';
+import { DataTypes } from "sequelize";
+import { sequelize } from "../database.js";
 
-export const Product = sequelize.define('Product', {
+export const Product = sequelize.define("Product", {
   product_name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   category: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   price: {
     type: DataTypes.DOUBLE,
     allowNull: false,
-    
   },
   total_quantity: {
     type: DataTypes.INTEGER,
@@ -26,16 +25,17 @@ export const Product = sequelize.define('Product', {
   picture_url: {
     type: DataTypes.STRING,
     allowNull: false,
-    
   },
   service: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    
   },
   availability: {
     type: DataTypes.ARRAY(DataTypes.INTEGER),
     allowNull: true,
-    
-  }
+  },
+  likes: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
 });
