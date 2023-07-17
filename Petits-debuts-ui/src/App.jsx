@@ -1,6 +1,12 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { UserContext } from "./UserContext";
+import {
+  UserContext,
+  CartContext,
+  ServiceContext,
+  ProductContext,
+  TotalContext,
+} from "./UserContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./Components/Main/Main";
 import LoginForm from "./Components/LoginForm/LoginForm";
@@ -8,8 +14,41 @@ import SignupForm from "./Components/SignupForm/SignupForm";
 import BusinessHome from "./Components/BusinessHome/BusinessHome";
 import Cart from "./Components/Cart/Cart";
 import RecentOrders from "./Components/RecentOrders/RecentOrders";
+import CheckoutCart from "./Components/CheckoutCart/CheckoutCart";
+import CheckoutServices from "./Components/CheckoutServices/CheckoutServices";
 
 function App() {
+  const [totalContext, setTotalContext] = useState(0);
+  const [cartContext, setCartContext] = useState(() => {
+    try {
+      // Retrieve the product data from storage or set it to null if not found
+      const storedCart = localStorage.getItem("cartContext");
+      return storedCart ? JSON.parse(storedCart) : null;
+    } catch (error) {
+      console.error("Error parsing stored cart:", error);
+      return null;
+    }
+  });
+  const [serviceContext, setServiceContext] = useState(() => {
+    try {
+      // Retrieve the product data from storage or set it to null if not found
+      const storedService = localStorage.getItem("serviceContext");
+      return storedService ? JSON.parse(storedService) : null;
+    } catch (error) {
+      console.error("Error parsing stored service:", error);
+      return null;
+    }
+  });
+  const [productContext, setProductContext] = useState(() => {
+    try {
+      // Retrieve the product data from storage or set it to null if not found
+      const storedProduct = localStorage.getItem("productContext");
+      return storedProduct ? JSON.parse(storedProduct) : null;
+    } catch (error) {
+      console.error("Error parsing stored product:", error);
+      return null;
+    }
+  });
   const [user, setUser] = useState(() => {
     try {
       // Retrieve the user data from storage or set it to null if not found
@@ -37,16 +76,33 @@ function App() {
   return (
     <div className="app">
       <UserContext.Provider value={{ user, updateUser }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={user ? <Main /> : <LoginForm />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/signup" element={<SignupForm />} />
-            <Route path="/businessmain" element={<BusinessHome />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/order" element={<RecentOrders />} />
-          </Routes>
-        </BrowserRouter>
+        <CartContext.Provider value={{ cartContext, setCartContext }}>
+          <ServiceContext.Provider
+            value={{ serviceContext, setServiceContext }}
+          >
+            <ProductContext.Provider
+              value={{ productContext, setProductContext }}
+            >
+              <TotalContext.Provider value={{ totalContext, setTotalContext }}>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={user ? <Main /> : <LoginForm />} />
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/signup" element={<SignupForm />} />
+                    <Route path="/businessmain" element={<BusinessHome />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/order" element={<RecentOrders />} />
+                    <Route path="/checkoutcart" element={<CheckoutCart />} />
+                    <Route
+                      path="/checkoutservices"
+                      element={<CheckoutServices />}
+                    />
+                  </Routes>
+                </BrowserRouter>
+              </TotalContext.Provider>
+            </ProductContext.Provider>
+          </ServiceContext.Provider>
+        </CartContext.Provider>
       </UserContext.Provider>
     </div>
   );

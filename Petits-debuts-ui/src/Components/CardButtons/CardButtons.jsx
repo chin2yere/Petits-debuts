@@ -1,6 +1,8 @@
 import * as React from "react";
 import "./CardButtons.css";
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function CardButtons({
   id,
@@ -9,12 +11,14 @@ export default function CardButtons({
   updateCart,
   personalCart,
   setPersonalCart,
+  availability,
+  serviceWallet,
+  setServiceWallet,
 }) {
+  const [startDate, setStartDate] = useState(null);
   function plusBtn() {
-    console.log({ id, service, cart, personalCart });
-
     const keyExists = id in personalCart;
-    console.log(keyExists);
+
     if (keyExists === true) {
       const temp = { ...personalCart };
       temp[id] += 1;
@@ -23,7 +27,6 @@ export default function CardButtons({
       const tempcart = { ...cart };
       tempcart.cart = temp;
       updateCart(tempcart);
-      console.log(tempcart);
     } else {
       const temporary = { ...personalCart, [id]: 1 };
       setPersonalCart(temporary);
@@ -31,7 +34,6 @@ export default function CardButtons({
       const tempcart = { ...cart };
       tempcart.cart = temporary;
       updateCart(tempcart);
-      console.log(tempcart);
     }
   }
   function minusBtn() {
@@ -40,11 +42,10 @@ export default function CardButtons({
       const temp = { ...personalCart };
       temp[id] -= 1;
       setPersonalCart(temp);
-      //now update the cart
+      //now update the cart object
       const tempcart = { ...cart };
       tempcart.cart = temp;
       updateCart(tempcart);
-      console.log(tempcart);
     }
   }
 
@@ -55,10 +56,62 @@ export default function CardButtons({
       return personalCart[id];
     }
   }
+  const isValidDate = (date) => {
+    const currentDate = new Date();
+    const dayFromDate = date.getDate();
+    const validity =
+      !(date < currentDate) && availability.includes(dayFromDate);
+
+    return validity;
+  };
+  const filterTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+    return !(currentDate.getDate() === selectedDate.getDate());
+  };
+  function updateServiceWallet(date) {
+    if (date) {
+      const keyExists = id in serviceWallet;
+      if (keyExists) {
+        const tempwallet = { ...serviceWallet };
+        tempwallet[id] = date;
+        setServiceWallet(tempwallet);
+      } else {
+        const temporary = { ...serviceWallet, [id]: date };
+        setServiceWallet(temporary);
+      }
+    } else {
+      const keyExists = id in serviceWallet;
+      if (keyExists) {
+        const tempwallet = { ...serviceWallet };
+        tempwallet[id] = date;
+        setServiceWallet(tempwallet);
+      }
+    }
+  }
   if (service) {
     return (
       <div>
-        <button>Schedule here</button>
+        <div>
+          <button>Schedule here</button>
+          <DatePicker
+            className="custom-datepicker"
+            showTimeSelect
+            selected={startDate}
+            onChange={(date) => {
+              setStartDate(date);
+              updateServiceWallet(date);
+            }}
+            isClearable
+            filterDate={isValidDate}
+            filterTime={filterTime}
+            placeholderText="mm/dd/yyyy"
+            dateFormat="MMMM d, yyyy h:mm aa"
+          />
+        </div>
+        <div>
+          <h5>Note : Dates are not reserved until payment is made</h5>
+        </div>
       </div>
     );
   } else {

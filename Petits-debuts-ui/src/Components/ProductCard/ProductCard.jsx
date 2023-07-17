@@ -14,6 +14,9 @@ export default function ProductCard({
   updateCart,
   personalCart,
   setPersonalCart,
+  availability,
+  serviceWallet,
+  setServiceWallet,
 }) {
   return (
     <div className="product-card">
@@ -42,6 +45,9 @@ export default function ProductCard({
           updateCart={updateCart}
           personalCart={personalCart}
           setPersonalCart={setPersonalCart}
+          availability={availability}
+          serviceWallet={serviceWallet}
+          setServiceWallet={setServiceWallet}
         />
       </div>
     </div>

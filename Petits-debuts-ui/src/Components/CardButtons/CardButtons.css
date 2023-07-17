@@ -10,3 +10,6 @@
   color: black;
   text-align: center;
 }
+.custom-datepicker {
+  width: 200px;
+}
