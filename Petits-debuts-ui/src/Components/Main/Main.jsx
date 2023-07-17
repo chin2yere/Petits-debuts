@@ -25,6 +25,7 @@ function Main() {
   const [search, setSearch] = useState("");
   const [personalCart, setPersonalCart] = useState({});
   const [serviceWallet, setServiceWallet] = useState({});
+  const total = 0.0;
 
   const [form, setForm] = useState({
     title: "",
@@ -75,7 +76,34 @@ function Main() {
     fetchAllProducts();
     fetchCart(user.id);
   }, []);
+  //save cart on logout
+  const saveCart = async (id) => {
+    if (
+      !(Object.keys(personalCart).length === 0) ||
+      !Object.values(personalCart).every((value) => value === null)
+    ) {
+      try {
+        // Make the signup API request
 
+        const response = await fetch(`http://localhost:3000/cart/delete`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            clearCartValue: personalCart,
+            clearCartValueTotal: total,
+            id,
+          }),
+          credentials: "include",
+        });
+      } catch (error) {
+        // Handle any network or API request errors
+        alert("order creation failed: " + error);
+      }
+    }
+  };
+  //end
   const handleChange = (event) => {
     setForm({
       ...form,
@@ -106,6 +134,7 @@ function Main() {
     setCartContext({});
     setServiceContext({});
     setServiceWallet({});
+    saveCart(user.id);
   };
 
   //filter by category

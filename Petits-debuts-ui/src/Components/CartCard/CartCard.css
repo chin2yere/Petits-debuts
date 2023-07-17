@@ -1,0 +1,27 @@
+.cart-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 8px;
+  height: 250px;
+  background-color: aliceblue;
+  width: 1000px;
+}
+.container {
+  padding: 2px 16px;
+}
+.row-cart-card {
+  display: flex;
+  width: 100%;
+}
+.leftcol-cart-card {
+  flex: 30%;
+}
+.rightcol-cart-card {
+  flex: 70%;
+  margin-left: 10px;
+}
+.img-cart-card {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+}

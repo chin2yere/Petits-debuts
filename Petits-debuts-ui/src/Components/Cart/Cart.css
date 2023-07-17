@@ -1,0 +1,11 @@
+.row-cart {
+  display: flex;
+  margin-bottom: 10px;
+}
+.button-cart {
+  background-color: rgb(129, 129, 238);
+  margin-right: 80px;
+}
+.checkout-cart {
+  margin-top: 30px;
+}

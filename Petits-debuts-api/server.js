@@ -119,7 +119,7 @@ app.post("/mycart", async (req, res) => {
   }
 });
 
-// Route to create a new post
+// Route to create a new business
 
 app.post("/business", async (req, res) => {
   try {
@@ -145,6 +145,55 @@ app.post("/business", async (req, res) => {
     res.status(201).json(businessWithUser);
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+// route to post an order
+app.post("/order/post", async (req, res) => {
+  const { cartContext, totalContext, id } = req.body;
+
+  try {
+    // Create a new order
+    const neworder = await Order.create({
+      order: cartContext,
+      total: totalContext,
+      userId: id,
+    });
+    console.log(1);
+
+    // Return the user data in the response
+    res.json({ neworder });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+////end
+//route to delete cart
+app.post("/cart/delete", async (req, res) => {
+  const { clearCartValue, clearCartValueTotal, id } = req.body;
+
+  try {
+    // find the cart
+    const existingCart = await Cart.findOne({ where: { userId: id } });
+    if (existingCart) {
+      const updatedCart = await existingCart.update({
+        cart: clearCartValue,
+        total: clearCartValueTotal,
+        userId: id,
+      });
+      res.json({ updatedCart });
+    } else {
+      const newCart = await Cart.create({
+        cart: clearCartValue,
+        total: clearCartValueTotal,
+        userId: id,
+      });
+      res.json({ newCart });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

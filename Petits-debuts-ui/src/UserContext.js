@@ -4,4 +4,11 @@ const UserContext = createContext();
 const CartContext = createContext();
 const ServiceContext = createContext();
 const ProductContext = createContext();
-export { UserContext, CartContext, ServiceContext, ProductContext };
+const TotalContext = createContext();
+export {
+  UserContext,
+  CartContext,
+  ServiceContext,
+  ProductContext,
+  TotalContext,
+};
