@@ -19,7 +19,7 @@ export default function CartCard({
           <div className="rightcol-cart-card">
             <h3>{name}</h3>
             <h4>${price}</h4>
-            <h5>{date.substring(0, 19).replace("T", " ")}</h5>
+            <h5>{date.toISOString().substring(0, 19).replace("T", " ")}</h5>
             <h3>${total}</h3>
           </div>
         </div>

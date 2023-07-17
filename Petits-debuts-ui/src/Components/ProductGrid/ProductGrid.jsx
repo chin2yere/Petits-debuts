@@ -65,6 +65,7 @@ export default function ProductGrid({
             availability={product.availability}
             serviceWallet={serviceWallet}
             setServiceWallet={setServiceWallet}
+            likes={product.likes}
           />
         </div>
       ))}

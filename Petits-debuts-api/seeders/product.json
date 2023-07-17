@@ -1,207 +1,222 @@
 [
-    {
-        "product_name": "Hand knit Plushies",
-        "category": "Custom Products",
-        "description": "Finely knit stuffed animals, made with the finest wool.",
-        "price": 20.99,
-        "total_quantity": 50,
-        "picture_url": "/Pictures/custom-products.png",
-        "service": false,
-        "businessId": 1
-        
-    },
-    {
-        "product_name": "Ben's tutoring for geometry",
-        "category": "Tutoring",
-        "description": "Get geometry help today, ace that class with Ben's help.",
-        "price": 30.00,
-        "picture_url": "/Pictures/tutoring.jpg",
-        "service": true,
-        "availability": [13,15,17,19,21,23,25,27,29],
-        "businessId": 2
-    },
-    {
-        "product_name": "Anita's hair saloon",
-        "category": "Hair & nails",
-        "description": "This is to all my ladies/guys! Come get your hair done at affordable prices.",
-        "price": 109.50,
-        "picture_url": "/Pictures/hair-and-nails.jpg",
-        "service": true,
-        "availability": [13,15,17,19,21,23,25,27,29],
-        "businessId": 3
-    },
-    {
-        "product_name": "Barry's tees",
-        "category": "Clothes & shoes",
-        "description": "Custom made tee shirts of itch-free material.",
-        "price": 19.00,
-        "total_quantity": 75,
-        "picture_url": "/Pictures/clothes-and-shoes.png",
-        "service": false,
-        "businessId": 4
-    },
-    {
-        "product_name": "Precious' kitchen",
-        "category": "Food",
-        "description": "Nigerian jollof rice fresh from the pot.",
-        "price": 30.00,
-        "total_quantity": 200,
-        "picture_url": "/Pictures/food.avif",
-        "service": false,
-        "businessId": 1
-    },
-    {
-        "product_name": "Photo charm",
-        "category": "Photography",
-        "description": "Get your graduation pictures at affordable prices.",
-        "price": 209.00,
-        "picture_url": "/Pictures/photography.jpeg",
-        "service": true,
-        "availability": [12,14,16,18,20,22,24,26,28,30],
-        "businessId": 3
-
-    },
-    {
-        "product_name": "Hand made key holder",
-        "category": "Custom Products",
-        "description": "Keyholder made with beads.",
-        "price": 10.99,
-        "total_quantity": 50,
-        "picture_url": "/Pictures/custom-products.png",
-        "service": false,
-        "businessId": 1
-    },
-    {
-        "product_name": "Belle's tutoring for Chemistry",
-        "category": "Tutoring",
-        "description": "Get Chemistry help today, ace that class with Belle's help.",
-        "price": 35.00,
-        "picture_url": "/Pictures/tutoring.jpg",
-        "service": true,
-        "availability": [12,14,16,18,20,22,24,26,28,30],
-        "businessId": 3
-      },
-    {
-        "product_name": "Ben's nail saloon",
-        "category": "Hair & nails",
-        "description": "This is to all my ladies/guys! Come get your nails done at affordable prices.",
-        "price": 59.50,
-        "picture_url": "/Pictures/hair-and-nails.jpg",
-        "service": true,
-        "availability": [12,14,16,18,20,22,24,26,28,30],
-        "businessId": 2
-      },
-    {
-        "product_name": "Barry's shoes",
-        "category": "Clothes & shoes",
-        "description": "Custom made shoes shirts of softly padded material.",
-        "price": 39.00,
-        "total_quantity": 35,
-        "picture_url": "/Pictures/clothes-and-shoes.png",
-        "service": false,
-        "businessId": 4
-      },
-    {
-        "product_name": "Kwame foods",
-        "category": "Food",
-        "description": "Ghanian jollof rice fresh from the pot.",
-        "price": 20.00,
-        "total_quantity": 100,
-        "picture_url": "/Pictures/food.avif",
-        "service": false,
-        "businessId": 4
-      },
-    {
-        "product_name": "Photo palace shots",
-        "category": "Photography",
-        "description": "Get your pictures at affordable prices.",
-        "price": 209.00,
-        "picture_url": "/Pictures/photography.jpeg",
-        "service": true,
-        "availability": [13,15,17,19,21,23,25,27,29],
-        "businessId": 5
-  
-      },
-    {
-        "product_name": "Hand made jewelry box",
-        "category": "Custom Products",
-        "description": "Jewelry box made with fine wire and cloth.",
-        "price": 50.99,
-        "total_quantity": 40,
-        "picture_url": "/Pictures/custom-products.png",
-        "service": false,
-        "businessId": 6
-      },
-    {
-        "product_name": "James's tutoring for Physics",
-        "category": "Tutoring",
-        "description": "Get Physics help today, ace that class with James' help.",
-        "price": 35.00,
-        "picture_url": "/Pictures/tutoring.jpg",
-        "service": true,
-        "availability": [13,15,17,19,21,23,25,27,29],
-        "businessId": 5
-      },
-    {
-        "product_name": "Mena's hair saloon",
-        "category": "Hair & nails",
-        "description": "This is to all my ladies/guys! Come get your hair done at awesome prices.",
-        "price": 139.50,
-        "picture_url": "/Pictures/hair-and-nails.jpg",
-        "service": true,
-        "availability": [13,15,17,19,21,23,25,27,29],
-        "businessId": 7
-      },
-    {
-        "product_name": "Fatima's shoes",
-        "category": "Clothes & shoes",
-        "description": "Custom made shoes shirts of softly padded material.",
-        "price": 49.00,
-        "total_quantity": 35,
-        "picture_url": "/Pictures/clothes-and-shoes.png",
-        "service": false,
-        "businessId": 6
-      },
-    {
-        "product_name": "Chinyere's foods",
-        "category": "Food",
-        "description": "Nigerian jollof rice fresh from the pot.",
-        "price": 30.00,
-        "total_quantity": 200,
-        "picture_url": "/Pictures/food.avif",
-        "service": false,
-        "businessId": 6
-      },
-    {
-        "product_name": "Lenszz",
-        "category": "Photography",
-        "description": "Get your pictures at affordable prices.",
-        "price": 259.00,
-        "picture_url": "/Pictures/photography.jpeg",
-        "service": true,
-        "availability": [13,15,17,19,21,23,25,27,29],
-        "businessId": 7
-  
-      },
-    {
-        "product_name": "Hand knit hoodies",
-        "category": "Custom Products",
-        "description": "Finely knit hoodies, made with the finest wool.",
-        "price": 50.99,
-        "total_quantity": 30,
-        "picture_url": "/Pictures/custom-products.png",
-        "service": false,
-        "businessId": 8
-    },
-    {
-        "product_name": "Fine wire",
-        "category": "Custom Products",
-        "description": "Finely crafted fine wire with beautiful metal.",
-        "price": 20.99,
-        "total_quantity": 50,
-        "picture_url": "/Pictures/custom-products.png",
-        "service": false,
-        "businessId": 8
-    }
-  ]
-  
+  {
+    "product_name": "Hand knit Plushies",
+    "category": "Custom Products",
+    "description": "Finely knit stuffed animals, made with the finest wool.",
+    "price": 20.99,
+    "total_quantity": 50,
+    "picture_url": "/Pictures/custom-products.png",
+    "service": false,
+    "likes": { "1": true, "3": true, "5": true, "7": true, "9": true },
+    "businessId": 1
+  },
+  {
+    "product_name": "Ben's tutoring for geometry",
+    "category": "Tutoring",
+    "description": "Get geometry help today, ace that class with Ben's help.",
+    "price": 30.0,
+    "picture_url": "/Pictures/tutoring.jpg",
+    "service": true,
+    "availability": [13, 15, 17, 19, 21, 23, 25, 27, 29],
+    "likes": { "2": true, "4": true, "6": true, "8": true },
+    "businessId": 2
+  },
+  {
+    "product_name": "Anita's hair saloon",
+    "category": "Hair & nails",
+    "description": "This is to all my ladies/guys! Come get your hair done at affordable prices.",
+    "price": 109.5,
+    "picture_url": "/Pictures/hair-and-nails.jpg",
+    "service": true,
+    "availability": [13, 15, 17, 19, 21, 23, 25, 27, 29],
+    "likes": { "1": true, "3": true, "5": true, "7": true, "9": true },
+    "businessId": 3
+  },
+  {
+    "product_name": "Barry's tees",
+    "category": "Clothes & shoes",
+    "description": "Custom made tee shirts of itch-free material.",
+    "price": 19.0,
+    "total_quantity": 75,
+    "picture_url": "/Pictures/clothes-and-shoes.png",
+    "service": false,
+    "likes": { "4": true, "2": true, "6": true, "7": true },
+    "businessId": 4
+  },
+  {
+    "product_name": "Precious' kitchen",
+    "category": "Food",
+    "description": "Nigerian jollof rice fresh from the pot.",
+    "price": 30.0,
+    "total_quantity": 200,
+    "picture_url": "/Pictures/food.avif",
+    "service": false,
+    "likes": { "1": true, "4": true, "5": true, "6": true, "9": true },
+    "businessId": 1
+  },
+  {
+    "product_name": "Photo charm",
+    "category": "Photography",
+    "description": "Get your graduation pictures at affordable prices.",
+    "price": 209.0,
+    "picture_url": "/Pictures/photography.jpeg",
+    "service": true,
+    "availability": [12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+    "likes": { "3": true, "5": true, "7": true, "9": true },
+    "businessId": 3
+  },
+  {
+    "product_name": "Hand made key holder",
+    "category": "Custom Products",
+    "description": "Keyholder made with beads.",
+    "price": 10.99,
+    "total_quantity": 50,
+    "picture_url": "/Pictures/custom-products.png",
+    "service": false,
+    "likes": { "3": true, "5": true },
+    "businessId": 1
+  },
+  {
+    "product_name": "Belle's tutoring for Chemistry",
+    "category": "Tutoring",
+    "description": "Get Chemistry help today, ace that class with Belle's help.",
+    "price": 35.0,
+    "picture_url": "/Pictures/tutoring.jpg",
+    "service": true,
+    "availability": [12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+    "likes": { "1": true, "3": true, "7": true, "9": true },
+    "businessId": 3
+  },
+  {
+    "product_name": "Ben's nail saloon",
+    "category": "Hair & nails",
+    "description": "This is to all my ladies/guys! Come get your nails done at affordable prices.",
+    "price": 59.5,
+    "picture_url": "/Pictures/hair-and-nails.jpg",
+    "service": true,
+    "availability": [12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+    "likes": { "2": true, "4": true, "6": true, "8": true },
+    "businessId": 2
+  },
+  {
+    "product_name": "Barry's shoes",
+    "category": "Clothes & shoes",
+    "description": "Custom made shoes shirts of softly padded material.",
+    "price": 39.0,
+    "total_quantity": 35,
+    "picture_url": "/Pictures/clothes-and-shoes.png",
+    "service": false,
+    "likes": { "1": true, "3": true, "9": true },
+    "businessId": 4
+  },
+  {
+    "product_name": "Kwame foods",
+    "category": "Food",
+    "description": "Ghanian jollof rice fresh from the pot.",
+    "price": 20.0,
+    "total_quantity": 100,
+    "picture_url": "/Pictures/food.avif",
+    "service": false,
+    "likes": { "3": true, "5": true, "7": true, "9": true },
+    "businessId": 4
+  },
+  {
+    "product_name": "Photo palace shots",
+    "category": "Photography",
+    "description": "Get your pictures at affordable prices.",
+    "price": 209.0,
+    "picture_url": "/Pictures/photography.jpeg",
+    "service": true,
+    "availability": [13, 15, 17, 19, 21, 23, 25, 27, 29],
+    "likes": { "1": true, "3": true, "5": true, "7": true, "9": true },
+    "businessId": 5
+  },
+  {
+    "product_name": "Hand made jewelry box",
+    "category": "Custom Products",
+    "description": "Jewelry box made with fine wire and cloth.",
+    "price": 50.99,
+    "total_quantity": 40,
+    "picture_url": "/Pictures/custom-products.png",
+    "service": false,
+    "likes": { "2": true, "4": true, "6": true, "8": true },
+    "businessId": 6
+  },
+  {
+    "product_name": "James's tutoring for Physics",
+    "category": "Tutoring",
+    "description": "Get Physics help today, ace that class with James' help.",
+    "price": 35.0,
+    "picture_url": "/Pictures/tutoring.jpg",
+    "service": true,
+    "availability": [13, 15, 17, 19, 21, 23, 25, 27, 29],
+    "likes": { "3": true, "5": true, "7": true, "9": true },
+    "businessId": 5
+  },
+  {
+    "product_name": "Mena's hair saloon",
+    "category": "Hair & nails",
+    "description": "This is to all my ladies/guys! Come get your hair done at awesome prices.",
+    "price": 139.5,
+    "picture_url": "/Pictures/hair-and-nails.jpg",
+    "service": true,
+    "availability": [13, 15, 17, 19, 21, 23, 25, 27, 29],
+    "likes": { "2": true, "4": true, "6": true, "8": true, "10": true },
+    "businessId": 7
+  },
+  {
+    "product_name": "Fatima's shoes",
+    "category": "Clothes & shoes",
+    "description": "Custom made shoes shirts of softly padded material.",
+    "price": 49.0,
+    "total_quantity": 35,
+    "picture_url": "/Pictures/clothes-and-shoes.png",
+    "service": false,
+    "likes": { "1": true, "3": true, "10": true, "7": true, "9": true },
+    "businessId": 6
+  },
+  {
+    "product_name": "Chinyere's foods",
+    "category": "Food",
+    "description": "Nigerian jollof rice fresh from the pot.",
+    "price": 30.0,
+    "total_quantity": 200,
+    "picture_url": "/Pictures/food.avif",
+    "service": false,
+    "likes": { "4": true, "6": true, "10": true },
+    "businessId": 6
+  },
+  {
+    "product_name": "Lenszz",
+    "category": "Photography",
+    "description": "Get your pictures at affordable prices.",
+    "price": 259.0,
+    "picture_url": "/Pictures/photography.jpeg",
+    "service": true,
+    "availability": [13, 15, 17, 19, 21, 23, 25, 27, 29],
+    "likes": { "1": true, "3": true, "5": true, "7": true, "9": true },
+    "businessId": 7
+  },
+  {
+    "product_name": "Hand knit hoodies",
+    "category": "Custom Products",
+    "description": "Finely knit hoodies, made with the finest wool.",
+    "price": 50.99,
+    "total_quantity": 30,
+    "picture_url": "/Pictures/custom-products.png",
+    "service": false,
+    "likes": {},
+    "businessId": 8
+  },
+  {
+    "product_name": "Fine wire",
+    "category": "Custom Products",
+    "description": "Finely crafted fine wire with beautiful metal.",
+    "price": 20.99,
+    "total_quantity": 50,
+    "picture_url": "/Pictures/custom-products.png",
+    "service": false,
+    "likes": { "1": true, "3": true, "5": true, "7": true, "9": true },
+    "businessId": 8
+  }
+]

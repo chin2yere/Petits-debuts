@@ -130,7 +130,7 @@ export default function Cart() {
           <div className="checkout-cart">
             <h3>Total Cost: ${grandTotalService}</h3>
             <Link to="/checkoutservices">
-              <button onClick={setTotalContext(grandTotalService)}>
+              <button onClick={() => setTotalContext(grandTotalService)}>
                 Checkout
               </button>
             </Link>
