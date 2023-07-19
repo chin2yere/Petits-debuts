@@ -6,6 +6,7 @@ import {
   ServiceContext,
   ProductContext,
   TotalContext,
+  OrderContext,
 } from "./UserContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./Components/Main/Main";
@@ -19,6 +20,17 @@ import CheckoutServices from "./Components/CheckoutServices/CheckoutServices";
 
 function App() {
   const [totalContext, setTotalContext] = useState(0);
+  const [orderContext, setOrderContext] = useState(() => {
+    try {
+      // Retrieve the product data from storage or set it to null if not found
+      const storedOrder = localStorage.getItem("orderContext");
+      return storedOrder ? JSON.parse(storedOrder) : null;
+    } catch (error) {
+      console.error("Error parsing stored order:", error);
+      return null;
+    }
+  });
+
   const [cartContext, setCartContext] = useState(() => {
     try {
       // Retrieve the product data from storage or set it to null if not found
@@ -84,21 +96,28 @@ function App() {
               value={{ productContext, setProductContext }}
             >
               <TotalContext.Provider value={{ totalContext, setTotalContext }}>
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/" element={user ? <Main /> : <LoginForm />} />
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="/signup" element={<SignupForm />} />
-                    <Route path="/businessmain" element={<BusinessHome />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/order" element={<RecentOrders />} />
-                    <Route path="/checkoutcart" element={<CheckoutCart />} />
-                    <Route
-                      path="/checkoutservices"
-                      element={<CheckoutServices />}
-                    />
-                  </Routes>
-                </BrowserRouter>
+                <OrderContext.Provider
+                  value={{ orderContext, setOrderContext }}
+                >
+                  <BrowserRouter>
+                    <Routes>
+                      <Route
+                        path="/"
+                        element={user ? <Main /> : <LoginForm />}
+                      />
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/signup" element={<SignupForm />} />
+                      <Route path="/businessmain" element={<BusinessHome />} />
+                      <Route path="/cart" element={<Cart />} />
+                      <Route path="/order" element={<RecentOrders />} />
+                      <Route path="/checkoutcart" element={<CheckoutCart />} />
+                      <Route
+                        path="/checkoutservices"
+                        element={<CheckoutServices />}
+                      />
+                    </Routes>
+                  </BrowserRouter>
+                </OrderContext.Provider>
               </TotalContext.Provider>
             </ProductContext.Provider>
           </ServiceContext.Provider>
