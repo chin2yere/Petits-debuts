@@ -27,7 +27,7 @@ function Main() {
   const [search, setSearch] = useState("");
   const [personalCart, setPersonalCart] = useState({});
   const [serviceWallet, setServiceWallet] = useState({});
-  const [trending, setTrending] = useState({});
+  //const [trending, setTrending] = useState({});
   const [allCarts, setAllCarts] = useState([]);
   const [allOrders, setAllOrders] = useState([]);
 
@@ -258,8 +258,6 @@ function Main() {
       <div className="content">
         <div className="row-trending-main">
           <Trending
-            trending={trending}
-            setTrending={setTrending}
             allCarts={allCarts}
             setAllCarts={setAllCarts}
             allOrders={allOrders}
