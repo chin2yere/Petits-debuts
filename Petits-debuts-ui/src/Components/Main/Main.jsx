@@ -6,6 +6,8 @@ import {
   ServiceContext,
   ProductContext,
   OrderContext,
+  TrendingContext,
+  TotalOtherContext,
 } from "../../UserContext.js";
 import { Link } from "react-router-dom";
 import Trending from "../Trending/Trending";
@@ -19,6 +21,8 @@ function Main() {
   const { serviceContext, setServiceContext } = useContext(ServiceContext);
   const { cartContext, setCartContext } = useContext(CartContext);
   const { orderContext, setOrderContext } = useContext(OrderContext);
+  const { trending, setTrending } = useContext(TrendingContext);
+  const { setTotalOther } = useContext(TotalOtherContext);
 
   const [cart, updateCart] = useState({});
   const [allProducts, setAllProducts] = useState([]);
@@ -43,12 +47,20 @@ function Main() {
     localStorage.setItem("orderContext", JSON.stringify(data));
   }
   //end
+  //save product context data
+  function saveProductContext(data) {
+    localStorage.setItem("productContext", JSON.stringify(data));
+  }
+
+  //end
+  //end
   useEffect(() => {
     const fetchAllProducts = async () => {
       const response = await fetch("http://localhost:3000/product");
       const data = await response.json();
       setAllProducts(data);
       setProductContext(data);
+      saveProductContext(data);
     };
     const fetchCart = async (id) => {
       try {
@@ -134,11 +146,13 @@ function Main() {
     };
     //end
 
+    //end
     fetchAllProducts();
     fetchCart(user.id);
     fetchOrder(user.id);
     fetchAllCarts();
     fetchAllOrders();
+    //createTrendingFormat();
   }, []);
   //save cart on logout
 
@@ -203,6 +217,8 @@ function Main() {
     setServiceContext({});
     setServiceWallet({});
     saveCart(user.id);
+    setTrending({});
+    setTotalOther(0);
   };
 
   //filter by category

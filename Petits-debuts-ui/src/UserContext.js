@@ -6,6 +6,9 @@ const ServiceContext = createContext();
 const ProductContext = createContext();
 const TotalContext = createContext();
 const OrderContext = createContext();
+const TrendingContext = createContext();
+const TotalOtherContext = createContext();
+
 export {
   UserContext,
   CartContext,
@@ -13,4 +16,6 @@ export {
   ProductContext,
   TotalContext,
   OrderContext,
+  TrendingContext,
+  TotalOtherContext,
 };

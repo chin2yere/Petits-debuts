@@ -1,7 +1,14 @@
 import * as React from "react";
 import "./Trending.css";
-import { OrderContext, UserContext } from "../../UserContext";
+import {
+  OrderContext,
+  UserContext,
+  TrendingContext,
+  TotalOtherContext,
+  ProductContext,
+} from "../../UserContext";
 import { useState, useContext, useEffect } from "react";
+import trendingpic from "../Pictures/Trending-.jpg";
 
 export default function Trending({
   allCarts,
@@ -14,28 +21,42 @@ export default function Trending({
 }) {
   const { orderContext, setOrderContext } = useContext(OrderContext);
   const { user } = useContext(UserContext);
-  const [trending, setTrending] = useState(() => {
-    try {
-      // Retrieve the product data from storage or set it to null if not found
-      const storedtrending = localStorage.getItem("trending");
-      return storedtrending ? JSON.parse(storedtrending) : null;
-    } catch (error) {
-      console.error("Error parsing stored trending:", error);
-      return null;
-    }
-  });
+  const { trending, setTrending } = useContext(TrendingContext);
+  const { productContext } = useContext(ProductContext);
+  const { TotalOther, setTotalOther } = useContext(TotalOtherContext);
+  //start trending
+
   //this function updates the local storage for trending
+
+  function saveTotalOtherData(data) {
+    localStorage.setItem("TotalOther", String(data));
+  }
   function saveTrendingData(data) {
     localStorage.setItem("trending", JSON.stringify(data));
   }
-
+  function calculateOtherScore(score) {
+    const reference = allCarts.length + allOrders.length;
+    if (score / reference >= 0.3) {
+      return 20;
+    } else if (score / reference >= 0.2) {
+      return 15;
+    } else if (score / reference >= 0.1) {
+      return 10;
+    } else if (score / reference >= 0) {
+      return 5;
+    } else {
+      return 0;
+    }
+  }
+  //console.log(productContext);
   //This function creates the skelenton of the trending
   useEffect(() => {
     //create the skeleton
+    console.log("inside useeffect");
     function createTrendingFormat() {
       const tempTrending = { ...trending };
 
-      allProducts.map((product) => {
+      productContext.map((product) => {
         function getLikes(product) {
           if (product.likes.hasOwnProperty(user.id) && product.likes[user.id]) {
             return 40;
@@ -58,25 +79,29 @@ export default function Trending({
           others: 0,
           cart: 0,
         };
-
+        //console.log(tempObject);
         tempTrending[keys] = tempObject;
       });
       setTrending(tempTrending);
-      saveTrendingData(tempTrending);
+      //saveTrendingData(tempTrending);
     }
 
     createTrendingFormat();
   }, []);
-  //use effect for orders
+  // //use effect for orders
   useEffect(() => {
     function loopThroughOrders(top50, order, tempTrending) {
       Object.entries(order.order).map(([key, value]) => {
         const b = key;
         if (value != 0) {
           if (top50) {
-            tempTrending[key].recent = 15;
+            if (tempTrending[key].recent === 0) {
+              tempTrending[key].recent = 15;
+            }
           } else {
-            tempTrending[key].recent = 10;
+            if (tempTrending[key].recent === 0) {
+              tempTrending[key].recent = 10;
+            }
           }
         }
       });
@@ -93,15 +118,15 @@ export default function Trending({
       setTrending(tempTrending);
       saveTrendingData(tempTrending);
     }
-
-    if (trending) {
+    console.log("hey");
+    if (trending && Object.keys(trending).length != 0) {
       const tempTrending2 = { ...trending };
       addRecentScore(tempTrending2);
     }
   }, []);
 
-  //end
-  //useEffect for cart
+  // //end
+  // // //useEffect for cart
   useEffect(() => {
     function loopThroughCart(personalCart, tempTrending) {
       Object.entries(personalCart).map(([key, value]) => {
@@ -116,17 +141,110 @@ export default function Trending({
       saveTrendingData(tempTrending);
     }
 
-    if (trending) {
+    if (trending && Object.keys(trending).length != 0) {
       const tempTrending2 = { ...trending };
       addCartScore(tempTrending2);
     }
   }, []);
-  //end
+  // //end
+  // //useEffect for other carts and orders
+  useEffect(() => {
+    let totalOthers = TotalOther;
+    //cart
+    function loopThroughCart(cart, tempTrending) {
+      Object.entries(cart).map(([key, value]) => {
+        if (value != 0) {
+          tempTrending[key].others += 1;
+          totalOthers += 1;
+        }
+      });
+    }
+    function loopThroughOtherCarts(tempTrending) {
+      allCarts.map((cart) => {
+        loopThroughCart(cart.cart, tempTrending);
+        //console.log(cart.cart);
+      });
+    }
+    //orders
+    function loopThroughOrder(order, tempTrending) {
+      Object.entries(order).map(([key, value]) => {
+        if (value != 0) {
+          tempTrending[key].others += 1;
+          totalOthers += 1;
+        }
+      });
+    }
+    function loopThroughOtherOrders(tempTrending) {
+      allOrders.map((order) => {
+        loopThroughOrder(order.order, tempTrending);
+      });
+      setTrending(tempTrending);
+      saveTrendingData(tempTrending);
+    }
 
+    if (
+      (trending && Object.keys(trending).length != 0 && TotalOther === 0) ||
+      (!TotalOther && trending && Object.keys(trending).length != 0)
+    ) {
+      console.log("in problematic function");
+      const tempTrending2 = { ...trending };
+      loopThroughOtherCarts(tempTrending2);
+      loopThroughOtherOrders(tempTrending2);
+      setTotalOther(totalOthers);
+      saveTotalOtherData(totalOthers);
+      //   saveTotalOtherData(totalOthers);
+      // if (TotalOther != 0) {
+      //   const temp = TotalOther + totalOthers;
+      //   setTotalOther(temp);
+      //   saveTotalOtherData(temp);
+      //   console.log("isn't zero");
+      // } else {
+      //   setTotalOther(totalOthers);
+      //   saveTotalOtherData(totalOthers);
+      // }
+    }
+  }, []);
+  // // //end
+  //console.log(TotalOther);
   return (
     <div className="trending">
+      <p>{console.log(trending)}</p>
       <div className="card-trending">
-        <p>{console.log({ trending })}</p>
+        {trending &&
+          Object.entries(trending).map(([key, value]) => {
+            const score =
+              value.recent +
+              value.location +
+              value.like +
+              value.cart +
+              calculateOtherScore(value.others);
+            if (score >= 70) {
+              const product = productContext.find((obj) => {
+                if (obj.id.toString() === key) {
+                  return obj;
+                }
+              });
+              console.log(product);
+
+              return (
+                <div className="row-trending" key={product.id}>
+                  <div className="leftcol-trending">
+                    <img
+                      className="image-trending"
+                      src={trendingpic}
+                      alt="trending picture"
+                    />
+                  </div>
+                  <div className="rightcol-trending">
+                    <h2>{product.product_name}</h2>
+                    <h3>{product.category}</h3>
+                    <h4>{product.price}</h4>
+                    <p>Scroll down to use the search bar</p>
+                  </div>
+                </div>
+              );
+            }
+          })}
       </div>
     </div>
   );
