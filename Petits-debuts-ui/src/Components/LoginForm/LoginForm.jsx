@@ -1,12 +1,18 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../../UserContext.js";
+import {
+  UserContext,
+  ProductContext,
+  TotalOtherContext,
+} from "../../UserContext.js";
 import "./LoginForm.css";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { updateUser } = useContext(UserContext);
+  const { productContext } = useContext(ProductContext);
+  const { totalOtherContext } = useContext(TotalOtherContext);
 
   const navigate = useNavigate();
 
@@ -32,6 +38,7 @@ const LoginForm = () => {
 
         // Update the user context
         updateUser(loggedInUser);
+        setTotalOther(null);
 
         // Navigate to the home page after successful login
         navigate("/");

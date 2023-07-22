@@ -3,7 +3,7 @@ import "./Productcard.css";
 import CardButtons from "../CardButtons/CardButtons";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useState, useContext } from "react";
-import { UserContext } from "../../UserContext";
+import { UserContext, ProductContext } from "../../UserContext";
 
 export default function ProductCard({
   picture_url,
@@ -23,6 +23,7 @@ export default function ProductCard({
   likes,
 }) {
   const { user } = useContext(UserContext);
+  const { setProductContext } = useContext(ProductContext);
   const [isLiked, setIsLiked] = useState(() => {
     if (likes[user.id] && likes[user.id] === true) {
       return true;
@@ -67,6 +68,14 @@ export default function ProductCard({
         }),
         credentials: "include",
       });
+      if (response.ok) {
+        const data = await response.json();
+
+        setProductContext(data.response);
+      } else {
+        // Handle signup failure case
+        alert("Order access failed");
+      }
     } catch (error) {
       // Handle any network or API request errors
       alert("like update creation failed: " + error);

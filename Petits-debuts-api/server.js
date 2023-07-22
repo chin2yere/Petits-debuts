@@ -208,7 +208,11 @@ app.post("/likes/update", async (req, res) => {
       const updatedProduct = await product.update({
         likes: tempLikes,
       });
-      res.json({ updatedProduct });
+      const response = await Product.findAll({
+        include: [{ model: Business, as: "business" }],
+        order: [["createdAt", "DESC"]],
+      });
+      res.json({ response });
     }
   } catch (error) {
     console.error(error);
@@ -216,6 +220,29 @@ app.post("/likes/update", async (req, res) => {
   }
 });
 
+//end
+// my order
+app.post("/myorder", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    // find all the user's orders
+    const userOrder = await Order.findAll({
+      where: { userId: id },
+      include: [{ model: User, as: "user" }],
+      order: [["createdAt", "DESC"]],
+    });
+
+    if (userOrder.length != 0) {
+      res.json({ userOrder });
+    } else {
+      res.json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 //end
 
 sequelize

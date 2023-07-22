@@ -5,6 +5,9 @@ import {
   CartContext,
   ServiceContext,
   ProductContext,
+  OrderContext,
+  TrendingContext,
+  TotalOtherContext,
 } from "../../UserContext.js";
 import { Link } from "react-router-dom";
 import Trending from "../Trending/Trending";
@@ -17,6 +20,9 @@ function Main() {
   const { productContext, setProductContext } = useContext(ProductContext);
   const { serviceContext, setServiceContext } = useContext(ServiceContext);
   const { cartContext, setCartContext } = useContext(CartContext);
+  const { orderContext, setOrderContext } = useContext(OrderContext);
+  const { trending, setTrending } = useContext(TrendingContext);
+  const { setTotalOther } = useContext(TotalOtherContext);
 
   const [cart, updateCart] = useState({});
   const [allProducts, setAllProducts] = useState([]);
@@ -25,6 +31,10 @@ function Main() {
   const [search, setSearch] = useState("");
   const [personalCart, setPersonalCart] = useState({});
   const [serviceWallet, setServiceWallet] = useState({});
+  //const [trending, setTrending] = useState({});
+  const [allCarts, setAllCarts] = useState([]);
+  const [allOrders, setAllOrders] = useState([]);
+
   const total = 0.0;
 
   const [form, setForm] = useState({
@@ -32,13 +42,25 @@ function Main() {
     content: "",
     credentials: "include",
   });
+  //save orders to memory
+  function saveOrderData(data) {
+    localStorage.setItem("orderContext", JSON.stringify(data));
+  }
+  //end
+  //save product context data
+  function saveProductContext(data) {
+    localStorage.setItem("productContext", JSON.stringify(data));
+  }
 
+  //end
+  //end
   useEffect(() => {
     const fetchAllProducts = async () => {
       const response = await fetch("http://localhost:3000/product");
       const data = await response.json();
       setAllProducts(data);
       setProductContext(data);
+      saveProductContext(data);
     };
     const fetchCart = async (id) => {
       try {
@@ -73,10 +95,67 @@ function Main() {
       }
     };
 
+    //fetch orders
+    const fetchOrder = async (id) => {
+      try {
+        // Make the signup API request
+        const response = await fetch(`http://localhost:3000/myorder`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+          }),
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const loggedInUserOrder = data.userOrder;
+
+          console.log("order access successful");
+
+          // Update the user context
+          setOrderContext(loggedInUserOrder);
+          saveOrderData(loggedInUserOrder);
+        } else {
+          // Handle signup failure case
+          alert("Order access failed");
+        }
+      } catch (error) {
+        // Handle any network or API request errors
+        alert("Order failed: " + error);
+      }
+    };
+
+    //end
+    //get cart
+    const fetchAllCarts = async () => {
+      const response = await fetch("http://localhost:3000/cart");
+      const data = await response.json();
+      setAllCarts(data);
+    };
+
+    //end
+    //get order
+    const fetchAllOrders = async () => {
+      const response = await fetch("http://localhost:3000/order");
+      const data = await response.json();
+      setAllOrders(data);
+    };
+    //end
+
+    //end
     fetchAllProducts();
     fetchCart(user.id);
+    fetchOrder(user.id);
+    fetchAllCarts();
+    fetchAllOrders();
+    //createTrendingFormat();
   }, []);
   //save cart on logout
+
   const saveCart = async (id) => {
     if (
       !(Object.keys(personalCart).length === 0) ||
@@ -103,6 +182,9 @@ function Main() {
       }
     }
   };
+  //end
+  //Technical challenge
+
   //end
   const handleChange = (event) => {
     setForm({
@@ -135,6 +217,10 @@ function Main() {
     setServiceContext({});
     setServiceWallet({});
     saveCart(user.id);
+    setTrending({});
+    setTotalOther(0);
+    localStorage.setItem("trending", JSON.stringify({}));
+    localStorage.setItem("TotalOther", String(0));
   };
 
   //filter by category
@@ -148,17 +234,7 @@ function Main() {
     });
     return filteredData;
   }
-  //filter by location
-  function filterProductsByLocation(data, location) {
-    const filteredData = data.filter((data) => {
-      if (data.location === location || location === "All locations") {
-        return true;
-      } else {
-        return false;
-      }
-    });
-    return filteredData;
-  }
+
   //search based on name or location
   function runSearch(text) {
     if (text != "") {
@@ -199,7 +275,15 @@ function Main() {
       </div>
       <div className="content">
         <div className="row-trending-main">
-          <Trending />
+          <Trending
+            allCarts={allCarts}
+            setAllCarts={setAllCarts}
+            allOrders={allOrders}
+            setAllOrders={setAllOrders}
+            allProducts={allProducts}
+            setAllProducts={setAllProducts}
+            personalCart={personalCart}
+          />
         </div>
         <div className="row-search-main">
           <Search
