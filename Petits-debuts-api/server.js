@@ -208,7 +208,11 @@ app.post("/likes/update", async (req, res) => {
       const updatedProduct = await product.update({
         likes: tempLikes,
       });
-      res.json({ updatedProduct });
+      const response = await Product.findAll({
+        include: [{ model: Business, as: "business" }],
+        order: [["createdAt", "DESC"]],
+      });
+      res.json({ response });
     }
   } catch (error) {
     console.error(error);

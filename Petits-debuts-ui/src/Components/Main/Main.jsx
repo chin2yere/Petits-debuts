@@ -219,6 +219,8 @@ function Main() {
     saveCart(user.id);
     setTrending({});
     setTotalOther(0);
+    localStorage.setItem("trending", JSON.stringify({}));
+    localStorage.setItem("TotalOther", String(0));
   };
 
   //filter by category

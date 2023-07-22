@@ -48,29 +48,34 @@ export default function Trending({
       return 0;
     }
   }
-  //console.log(productContext);
+
   //This function creates the skelenton of the trending
+  //this is the first useeffect
   useEffect(() => {
     //create the skeleton
-    console.log("inside useeffect");
-    function createTrendingFormat() {
-      const tempTrending = { ...trending };
 
-      productContext.map((product) => {
-        function getLikes(product) {
-          if (product.likes.hasOwnProperty(user.id) && product.likes[user.id]) {
-            return 40;
-          } else {
-            return 0;
-          }
+    function createTrendingFormat() {
+      const tempTrending = {};
+
+      function getLikes(product) {
+        if (
+          product.likes.hasOwnProperty(user.id) &&
+          product.likes[user.id] === true
+        ) {
+          return 40;
+        } else {
+          return 0;
         }
-        function getLocation(product) {
-          if (user.location === product.business.location) {
-            return 20;
-          } else {
-            return 0;
-          }
+      }
+      function getLocation(product) {
+        if (user.location === product.business.location) {
+          return 20;
+        } else {
+          return 0;
         }
+      }
+
+      productContext.forEach((product) => {
         const keys = product.id;
         const tempObject = {
           recent: 0,
@@ -79,20 +84,28 @@ export default function Trending({
           others: 0,
           cart: 0,
         };
-        //console.log(tempObject);
+
         tempTrending[keys] = tempObject;
       });
+
       setTrending(tempTrending);
-      //saveTrendingData(tempTrending);
+      saveTrendingData(tempTrending);
     }
 
     createTrendingFormat();
-  }, []);
-  // //use effect for orders
+  }, [productContext]);
+
+  //This useeffect was done to help keep track of trending
+
+  useEffect(() => {
+    console.log("trending has been updated:", trending);
+  }, [trending]);
+
+  //this is the useeffect for orders  //it is the second one
   useEffect(() => {
     function loopThroughOrders(top50, order, tempTrending) {
       Object.entries(order.order).map(([key, value]) => {
-        const b = key;
+        //const b = key;
         if (value != 0) {
           if (top50) {
             if (tempTrending[key].recent === 0) {
@@ -115,18 +128,18 @@ export default function Trending({
         }
         loopThroughOrders(top50, orderContext[i], tempTrending);
       }
-      setTrending(tempTrending);
-      saveTrendingData(tempTrending);
+      setTrending({ ...tempTrending });
+      saveTrendingData({ ...tempTrending });
     }
-    console.log("hey");
+
     if (trending && Object.keys(trending).length != 0) {
       const tempTrending2 = { ...trending };
       addRecentScore(tempTrending2);
     }
-  }, []);
+  }, [productContext]);
 
   // //end
-  // // //useEffect for cart
+  // useEffect for cart // it is the third one
   useEffect(() => {
     function loopThroughCart(personalCart, tempTrending) {
       Object.entries(personalCart).map(([key, value]) => {
@@ -137,17 +150,17 @@ export default function Trending({
     }
     function addCartScore(tempTrending) {
       loopThroughCart(personalCart, tempTrending);
-      setTrending(tempTrending);
-      saveTrendingData(tempTrending);
+      setTrending({ ...tempTrending });
+      saveTrendingData({ ...tempTrending });
     }
 
     if (trending && Object.keys(trending).length != 0) {
       const tempTrending2 = { ...trending };
       addCartScore(tempTrending2);
     }
-  }, []);
-  // //end
-  // //useEffect for other carts and orders
+  }, [productContext]);
+  //end
+  //useEffect for other carts and orders
   useEffect(() => {
     let totalOthers = TotalOther;
     //cart
@@ -162,7 +175,6 @@ export default function Trending({
     function loopThroughOtherCarts(tempTrending) {
       allCarts.map((cart) => {
         loopThroughCart(cart.cart, tempTrending);
-        //console.log(cart.cart);
       });
     }
     //orders
@@ -178,37 +190,24 @@ export default function Trending({
       allOrders.map((order) => {
         loopThroughOrder(order.order, tempTrending);
       });
-      setTrending(tempTrending);
-      saveTrendingData(tempTrending);
+      setTrending({ ...tempTrending });
     }
 
     if (
       (trending && Object.keys(trending).length != 0 && TotalOther === 0) ||
       (!TotalOther && trending && Object.keys(trending).length != 0)
     ) {
-      console.log("in problematic function");
       const tempTrending2 = { ...trending };
       loopThroughOtherCarts(tempTrending2);
       loopThroughOtherOrders(tempTrending2);
       setTotalOther(totalOthers);
       saveTotalOtherData(totalOthers);
-      //   saveTotalOtherData(totalOthers);
-      // if (TotalOther != 0) {
-      //   const temp = TotalOther + totalOthers;
-      //   setTotalOther(temp);
-      //   saveTotalOtherData(temp);
-      //   console.log("isn't zero");
-      // } else {
-      //   setTotalOther(totalOthers);
-      //   saveTotalOtherData(totalOthers);
-      // }
     }
-  }, []);
+  }, [TotalOther]);
   // // //end
-  //console.log(TotalOther);
+
   return (
     <div className="trending">
-      <p>{console.log(trending)}</p>
       <div className="card-trending">
         {trending &&
           Object.entries(trending).map(([key, value]) => {
@@ -224,7 +223,6 @@ export default function Trending({
                   return obj;
                 }
               });
-              console.log(product);
 
               return (
                 <div className="row-trending" key={product.id}>
@@ -238,7 +236,7 @@ export default function Trending({
                   <div className="rightcol-trending">
                     <h2>{product.product_name}</h2>
                     <h3>{product.category}</h3>
-                    <h4>{product.price}</h4>
+                    <h4>${product.price}</h4>
                     <p>Scroll down to use the search bar</p>
                   </div>
                 </div>
