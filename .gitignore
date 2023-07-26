@@ -35,8 +35,9 @@ Icon
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
-#api key
+# api key
 api-key.js
+
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
