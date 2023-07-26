@@ -1,4 +1,6 @@
 .*
+technicalChallenge2
+main
 # js third-party dependencies
 node_modules
 
@@ -35,9 +37,10 @@ Icon
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
+technicalChallenge2
 # api key
 api-key.js
-
+main
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
