@@ -9,7 +9,6 @@ import {
   CheckoutTypeContext,
 } from "../../UserContext.js";
 
-//import { clientId } from "../../../api-key";
 import {
   PayPalScriptProvider,
   PayPalButtons,
@@ -112,13 +111,10 @@ const PayPal = () => {
   const clearCartValue = {};
   const clearCartValueTotal = 0.0;
   const navigate = useNavigate();
-
-  //
   const amount = String((totalContext * 100 - user.money) / 100);
   const currency = "USD";
   const style = { layout: "vertical" };
 
-  //
   useEffect(() => {
     localStorage.setItem(
       "moneyUpdateContext",
