@@ -84,6 +84,9 @@ export default function TopBar({ personalCart, serviceWallet }) {
           </button>
         </div>
         <div className="col2-top-bar">
+          <Link to="/topup">
+            <button>Buy Points</button>&nbsp;&nbsp;
+          </Link>
           <Link to="/cart">
             <button onClick={() => setCartNecessities()}>cart</button>
           </Link>

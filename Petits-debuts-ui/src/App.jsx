@@ -23,7 +23,7 @@ import CheckoutCart from "./Components/CheckoutCart/CheckoutCart";
 import CheckoutServices from "./Components/CheckoutServices/CheckoutServices";
 import PayPal from "./Components/PayPal/PayPal";
 import Success from "./Components/Success/Success";
-
+import PointsTopUp from "./Components/PointsTopUp/PointsTopUp";
 function App() {
   const [totalContext, setTotalContext] = useState(0);
   const [checkoutTypeContext, setCheckoutTypeContext] = useState(() => {
@@ -182,6 +182,7 @@ function App() {
                               />
                               <Route path="/buyPoints" element={<PayPal />} />
                               <Route path="/success" element={<Success />} />
+                              <Route path="/topup" element={<PointsTopUp />} />
                             </Routes>
                           </BrowserRouter>
                         </CheckoutTypeContext.Provider>
