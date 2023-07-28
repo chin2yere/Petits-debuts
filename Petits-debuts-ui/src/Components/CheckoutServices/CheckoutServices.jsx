@@ -5,15 +5,48 @@ import {
   UserContext,
   ServiceContext,
   TotalContext,
+  MoneyUpdateContext,
 } from "../../UserContext.js";
 
 const CheckoutServices = () => {
   const { serviceContext, setServiceContext } = useContext(ServiceContext);
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
   const { totalContext } = useContext(TotalContext);
+  const { moneyUpdateContext, setMoneyUpdateContext } =
+    useContext(MoneyUpdateContext);
   const clearCartValue = {};
   const clearCartValueTotal = 0.0;
   const navigate = useNavigate();
+
+  //network call for money update
+  const networkCallsForPoints = async () => {
+    try {
+      // Make the signup API request
+
+      const response = await fetch(`http://localhost:3000/money/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          buyer: user.id,
+          deduction: totalContext * 100,
+          moneyUpdateContext,
+        }),
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const newUser = data.updatedMoney;
+        updateUser(newUser);
+      }
+    } catch (error) {
+      // Handle any network or API request errors
+      alert("order creation failed: " + error);
+    }
+  };
+
+  //end
 
   const postOrders = async (id) => {
     try {
@@ -39,14 +72,17 @@ const CheckoutServices = () => {
 
   function clearServiceCart() {
     setServiceContext(null);
-    navigate("/");
+    navigate("/success");
   }
-  console.log("hi");
+
   return (
     <div className="checkout-cart">
-      <h3>Click here to confirm checkout</h3>
+      <h3>Goodnews, Your points are adequate to make this purchase. </h3>
+      <h3>Click below to confirm checkout. </h3>
+      <h4>This purchase will cost you {totalContext * 100} points</h4>
       <button
         onClick={() => {
+          networkCallsForPoints();
           postOrders(user.id);
           clearServiceCart();
         }}

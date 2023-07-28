@@ -45,6 +45,7 @@ router.post("/users", async (req, res) => {
       address,
       businessOwner,
       location,
+      money: 0,
     });
     console.log({
       name: username,

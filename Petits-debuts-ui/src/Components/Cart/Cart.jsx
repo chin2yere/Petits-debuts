@@ -7,6 +7,8 @@ import {
   ServiceContext,
   ProductContext,
   TotalContext,
+  MoneyUpdateContext,
+  CheckoutTypeContext,
 } from "../../UserContext.js";
 import CartCard from "../CartCard/CartCard";
 import clothesAndShoes from "../Pictures/clothes-and-shoes.png";
@@ -23,11 +25,33 @@ export default function Cart() {
   const { cartContext, setCartContext } = useContext(CartContext);
   const { user } = useContext(UserContext);
   const { totalContext, setTotalContext } = useContext(TotalContext);
+  const { checkoutTypeContext, setCheckoutTypeContext } =
+    useContext(CheckoutTypeContext);
+  const { moneyUpdateContext, setMoneyUpdateContext } =
+    useContext(MoneyUpdateContext);
 
   const [serviceTab, setServiceTab] = useState(false);
 
   let grandTotal = 0;
   let grandTotalService = 0;
+  let tempMoneyContext = {};
+
+  function whereToNavigate(grandTotal) {
+    const totalPoints = grandTotal.toFixed(2) * 100;
+    if (user.money >= totalPoints) {
+      let link1 = "";
+      if (checkoutTypeContext === "goods") {
+        link1 = "/checkoutcart";
+      } else if (checkoutTypeContext === "service") {
+        link1 = "/checkoutservices";
+      }
+
+      return link1;
+    } else {
+      const link = "/buyPoints";
+      return link;
+    }
+  }
 
   function saveCartData(data) {
     localStorage.setItem("productContext", JSON.stringify(data.productContext));
@@ -102,6 +126,7 @@ export default function Cart() {
               Service
             </button>
           </div>
+          <div>{setCheckoutTypeContext("service")}</div>
           <div>
             {Object.entries(serviceContext).map(([key, value]) => {
               if (value) {
@@ -110,6 +135,13 @@ export default function Cart() {
                     return obj;
                   }
                 });
+                const eyed = product.business.userId;
+                const tempval = product.price.toFixed(2) * 100;
+                if (eyed in tempMoneyContext) {
+                  tempMoneyContext[eyed] += tempval;
+                } else {
+                  tempMoneyContext = { ...tempMoneyContext, [eyed]: tempval };
+                }
 
                 grandTotalService = grandTotalService + product.price;
 
@@ -121,16 +153,22 @@ export default function Cart() {
                     price={product.price}
                     quantity={null}
                     date={value}
-                    total={product.price}
+                    total={product.price.toFixed(2)}
                   />
                 );
               }
             })}
           </div>
           <div className="checkout-cart">
-            <h3>Total Cost: ${grandTotalService}</h3>
-            <Link to="/checkoutservices">
-              <button onClick={() => setTotalContext(grandTotalService)}>
+            <div>{console.log(tempMoneyContext)}</div>
+            <h3>Total Cost: ${grandTotalService.toFixed(2)}</h3>
+            <Link to={whereToNavigate(grandTotalService)}>
+              <button
+                onClick={() => {
+                  setTotalContext(grandTotalService.toFixed(2));
+                  setMoneyUpdateContext(tempMoneyContext);
+                }}
+              >
                 Checkout
               </button>
             </Link>
@@ -179,6 +217,8 @@ export default function Cart() {
               Service
             </button>
           </div>
+          <div>{setCheckoutTypeContext("goods")}</div>
+
           <div>
             {Object.entries(cartContext).map(([key, value]) => {
               if (value != 0) {
@@ -187,6 +227,13 @@ export default function Cart() {
                     return obj;
                   }
                 });
+                const eyed = product.business.userId;
+                const tempval = (product.price * value).toFixed(2) * 100;
+                if (eyed in tempMoneyContext) {
+                  tempMoneyContext[eyed] += tempval;
+                } else {
+                  tempMoneyContext = { ...tempMoneyContext, [eyed]: tempval };
+                }
 
                 grandTotal = grandTotal + product.price * value;
 
@@ -198,16 +245,22 @@ export default function Cart() {
                     price={product.price}
                     quantity={value}
                     date={null}
-                    total={product.price * value}
+                    total={(product.price * value).toFixed(2)}
                   />
                 );
               }
             })}
           </div>
           <div className="checkout-cart">
-            <h3>Total Cost: ${grandTotal}</h3>
-            <Link to="/checkoutcart">
-              <button onClick={() => setTotalContext(grandTotal)}>
+            <div>{console.log(tempMoneyContext)}</div>
+            <h3>Total Cost: ${grandTotal.toFixed(2)}</h3>
+            <Link to={whereToNavigate(grandTotal)}>
+              <button
+                onClick={() => {
+                  setTotalContext(grandTotal.toFixed(2));
+                  setMoneyUpdateContext(tempMoneyContext);
+                }}
+              >
                 Checkout
               </button>
             </Link>

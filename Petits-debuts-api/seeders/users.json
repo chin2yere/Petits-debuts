@@ -1,96 +1,92 @@
 [
-    {
-      
-      "name": "User 1",
-      "email": "user1@example.com",
-      "password": "password1",
-      "address": "Address 1",
-      "businessOwner": true,
-      "location": "Pennsylvania"
-    },
-    {
-      
-      "name": "User 2",
-      "email": "user2@example.com",
-      "password": "password2",
-      "address": "Address 2",
-      "businessOwner": false,
-      "location": "Maryland"
-    },
-    {
-      
-      "name": "User 3",
-      "email": "user3@example.com",
-      "password": "password3",
-      "address": "Address 3",
-      "businessOwner": true,
-      "location": "Delaware"
-    },
-    {
-      
-      "name": "User 4",
-      "email": "user4@example.com",
-      "password": "password4",
-      "address": "Address 4",
-      "businessOwner": false,
-      "location": "Baltimore"
-    },
-    {
-      
-      "name": "User 5",
-      "email": "user5@example.com",
-      "password": "password5",
-      "address": "Address 5",
-      "businessOwner": true,
-      "location": "New York"
-    },
-    {
-      
-      "name": "User 6",
-      "email": "user6@example.com",
-      "password": "password6",
-      "address": "Address 6",
-      "businessOwner": false,
-      "location": "New Jersey"
-    },
-    {
-      
-      "name": "User 7",
-      "email": "user7@example.com",
-      "password": "password7",
-      "address": "Address 7",
-      "businessOwner": true,
-      "location": "Pennsylvania"
-    },
-    {
-      
-      "name": "User 8",
-      "email": "user8@example.com",
-      "password": "password8",
-      "address": "Address 8",
-      "businessOwner": false,
-      "location": "Maryland"
-    },
-    {
-      
-      "name": "User 9",
-      "email": "user9@example.com",
-      "password": "password9",
-      "address": "Address 9",
-      "businessOwner": true,
-      "location": "Delaware"
-    },
-    {
-      
-      "name": "User 10",
-      "email": "user10@example.com",
-      "password": "password10",
-      "address": "Address 10",
-      "businessOwner": false,
-      "location": "Baltimore"
-    }
-
-
-      
-  ]
-  
+  {
+    "name": "User 1",
+    "email": "user1@example.com",
+    "password": "password1",
+    "address": "Address 1",
+    "businessOwner": true,
+    "location": "Pennsylvania",
+    "money": 600
+  },
+  {
+    "name": "User 2",
+    "email": "user2@example.com",
+    "password": "password2",
+    "address": "Address 2",
+    "businessOwner": false,
+    "location": "Maryland",
+    "money": 100
+  },
+  {
+    "name": "User 3",
+    "email": "user3@example.com",
+    "password": "password3",
+    "address": "Address 3",
+    "businessOwner": true,
+    "location": "Delaware",
+    "money": 900
+  },
+  {
+    "name": "User 4",
+    "email": "user4@example.com",
+    "password": "password4",
+    "address": "Address 4",
+    "businessOwner": false,
+    "location": "Baltimore",
+    "money": 100
+  },
+  {
+    "name": "User 5",
+    "email": "user5@example.com",
+    "password": "password5",
+    "address": "Address 5",
+    "businessOwner": true,
+    "location": "New York",
+    "money": 100
+  },
+  {
+    "name": "User 6",
+    "email": "user6@example.com",
+    "password": "password6",
+    "address": "Address 6",
+    "businessOwner": false,
+    "location": "New Jersey",
+    "money": 500
+  },
+  {
+    "name": "User 7",
+    "email": "user7@example.com",
+    "password": "password7",
+    "address": "Address 7",
+    "businessOwner": true,
+    "location": "Pennsylvania",
+    "money": 400
+  },
+  {
+    "name": "User 8",
+    "email": "user8@example.com",
+    "password": "password8",
+    "address": "Address 8",
+    "businessOwner": false,
+    "location": "Maryland",
+    "money": 300
+  },
+  {
+    "name": "User 9",
+    "email": "user9@example.com",
+    "password": "password9",
+    "address": "Address 9",
+    "businessOwner": true,
+    "location": "Delaware",
+    "money": 200
+  },
+  {
+    "name": "User 10",
+    "email": "user10@example.com",
+    "password": "password10",
+    "address": "Address 10",
+    "businessOwner": false,
+    "location": "Baltimore",
+    "money": 1000
+  }
+]

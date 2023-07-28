@@ -12,9 +12,10 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const { updateUser } = useContext(UserContext);
   const { productContext } = useContext(ProductContext);
-  const { totalOtherContext } = useContext(TotalOtherContext);
+  const { TotalOther, setTotalOther } = useContext(TotalOtherContext);
 
   const navigate = useNavigate();
+  console.log(TotalOther);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -39,6 +40,7 @@ const LoginForm = () => {
         // Update the user context
         updateUser(loggedInUser);
         setTotalOther(null);
+        //localStorage.setItem("TotalOther", null);
 
         // Navigate to the home page after successful login
         navigate("/");
