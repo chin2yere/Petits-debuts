@@ -94,9 +94,19 @@ const PayPal = () => {
   const clearCartValue = {};
   const clearCartValueTotal = 0.0;
   const navigate = useNavigate();
+<<<<<<< HEAD
   const currency = "USD";
   const style = { layout: "vertical" };
 
+=======
+
+  //
+  //const amount = String((totalContext * 100 - user.money) / 100);
+  const currency = "USD";
+  const style = { layout: "vertical" };
+
+  //
+>>>>>>> dc07fb1e0538a7f37d77f981623b577d46c7ff38
   function calculateAmount(amount) {
     if (amount === "") {
       return "1";
