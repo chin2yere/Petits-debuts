@@ -245,6 +245,65 @@ app.post("/myorder", async (req, res) => {
 });
 //end
 
+// money update
+app.post("/buyer/topup", async (req, res) => {
+  const { buyer, deduction } = req.body;
+  console.log(req.body);
+  try {
+    // find all the user's orders
+    const topupUser = await User.findOne({
+      where: { id: buyer },
+    });
+    if (topupUser) {
+      const points = topupUser.money;
+      const updatedMoney = await topupUser.update({
+        money: points + deduction,
+      });
+      res.json({ updatedMoney });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+//end
+//points manipulation
+app.post("/money/update", async (req, res) => {
+  const { buyer, deduction, moneyUpdateContext } = req.body;
+  //console.log(req.body);
+  try {
+    // find all the user's orders
+    const topupUser = await User.findOne({
+      where: { id: buyer },
+    });
+    if (topupUser) {
+      const points = topupUser.money;
+      const updatedMoney = await topupUser.update({
+        money: points - deduction,
+      });
+      for (const [key, value] of Object.entries(moneyUpdateContext)) {
+        const businessOwner = await User.findOne({
+          where: { id: key },
+        });
+        if (businessOwner) {
+          const currentMoney = businessOwner.money;
+          const updatedBusinessOwnerMoney = await businessOwner.update({
+            money: currentMoney + value,
+          });
+        }
+      }
+
+      res.json({ updatedMoney });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+//end
+
+//end
+
 sequelize
   .sync({ alter: true })
   .then(() => {

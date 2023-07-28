@@ -22,7 +22,7 @@ function Main() {
   const { cartContext, setCartContext } = useContext(CartContext);
   const { orderContext, setOrderContext } = useContext(OrderContext);
   const { trending, setTrending } = useContext(TrendingContext);
-  const { setTotalOther } = useContext(TotalOtherContext);
+  const { TotalOther, setTotalOther } = useContext(TotalOtherContext);
 
   const [cart, updateCart] = useState({});
   const [allProducts, setAllProducts] = useState([]);
@@ -264,6 +264,7 @@ function Main() {
             {user ? (
               <>
                 <span>Hi {user.name}! |</span>
+                <p>You have {user.money} points |</p>
                 <button onClick={handleLogout}>Logout</button>
               </>
             ) : (
@@ -271,6 +272,7 @@ function Main() {
             )}
           </div>
         </header>
+
         <TopBar personalCart={personalCart} serviceWallet={serviceWallet} />
       </div>
       <div className="content">

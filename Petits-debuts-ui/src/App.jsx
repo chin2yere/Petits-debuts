@@ -9,6 +9,8 @@ import {
   OrderContext,
   TrendingContext,
   TotalOtherContext,
+  MoneyUpdateContext,
+  CheckoutTypeContext,
 } from "./UserContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./Components/Main/Main";
@@ -19,9 +21,31 @@ import Cart from "./Components/Cart/Cart";
 import RecentOrders from "./Components/RecentOrders/RecentOrders";
 import CheckoutCart from "./Components/CheckoutCart/CheckoutCart";
 import CheckoutServices from "./Components/CheckoutServices/CheckoutServices";
+import PayPal from "./Components/PayPal/PayPal";
+import Success from "./Components/Success/Success";
 
 function App() {
   const [totalContext, setTotalContext] = useState(0);
+  const [checkoutTypeContext, setCheckoutTypeContext] = useState(() => {
+    try {
+      // Retrieve the product data from storage or set it to null if not found
+      const storedtype = localStorage.getItem("checkoutTypeContext");
+      return storedtype ? parseInt(storedother, 10) : null;
+    } catch (error) {
+      console.error("Error parsing stored type:", error);
+      return null;
+    }
+  });
+  const [moneyUpdateContext, setMoneyUpdateContext] = useState(() => {
+    try {
+      // Retrieve the product data from storage or set it to null if not found
+      const storedmoney = localStorage.getItem("moneyUpdateContext");
+      return storedmoney ? JSON.parse(storedmoney) : null;
+    } catch (error) {
+      console.error("Error parsing stored money:", error);
+      return null;
+    }
+  });
   const [TotalOther, setTotalOther] = useState(() => {
     try {
       // Retrieve the product data from storage or set it to null if not found
@@ -125,30 +149,43 @@ function App() {
                     <TotalOtherContext.Provider
                       value={{ TotalOther, setTotalOther }}
                     >
-                      <BrowserRouter>
-                        <Routes>
-                          <Route
-                            path="/"
-                            element={user ? <Main /> : <LoginForm />}
-                          />
-                          <Route path="/login" element={<LoginForm />} />
-                          <Route path="/signup" element={<SignupForm />} />
-                          <Route
-                            path="/businessmain"
-                            element={<BusinessHome />}
-                          />
-                          <Route path="/cart" element={<Cart />} />
-                          <Route path="/order" element={<RecentOrders />} />
-                          <Route
-                            path="/checkoutcart"
-                            element={<CheckoutCart />}
-                          />
-                          <Route
-                            path="/checkoutservices"
-                            element={<CheckoutServices />}
-                          />
-                        </Routes>
-                      </BrowserRouter>
+                      <MoneyUpdateContext.Provider
+                        value={{ moneyUpdateContext, setMoneyUpdateContext }}
+                      >
+                        <CheckoutTypeContext.Provider
+                          value={{
+                            checkoutTypeContext,
+                            setCheckoutTypeContext,
+                          }}
+                        >
+                          <BrowserRouter>
+                            <Routes>
+                              <Route
+                                path="/"
+                                element={user ? <Main /> : <LoginForm />}
+                              />
+                              <Route path="/login" element={<LoginForm />} />
+                              <Route path="/signup" element={<SignupForm />} />
+                              <Route
+                                path="/businessmain"
+                                element={<BusinessHome />}
+                              />
+                              <Route path="/cart" element={<Cart />} />
+                              <Route path="/order" element={<RecentOrders />} />
+                              <Route
+                                path="/checkoutcart"
+                                element={<CheckoutCart />}
+                              />
+                              <Route
+                                path="/checkoutservices"
+                                element={<CheckoutServices />}
+                              />
+                              <Route path="/buyPoints" element={<PayPal />} />
+                              <Route path="/success" element={<Success />} />
+                            </Routes>
+                          </BrowserRouter>
+                        </CheckoutTypeContext.Provider>
+                      </MoneyUpdateContext.Provider>
                     </TotalOtherContext.Provider>
                   </TrendingContext.Provider>
                 </OrderContext.Provider>

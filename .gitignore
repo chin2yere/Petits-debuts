@@ -1,5 +1,4 @@
 .*
-
 # js third-party dependencies
 node_modules
 
@@ -35,6 +34,9 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+
+# api key
+api-key.js
 
 # Directories potentially created on remote AFP share
 .AppleDB

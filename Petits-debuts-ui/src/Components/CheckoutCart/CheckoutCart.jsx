@@ -1,15 +1,51 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./CheckoutCart.css";
-import { UserContext, CartContext, TotalContext } from "../../UserContext.js";
+import {
+  UserContext,
+  CartContext,
+  TotalContext,
+  MoneyUpdateContext,
+} from "../../UserContext.js";
 
 const CheckoutCart = () => {
   const { cartContext, setCartContext } = useContext(CartContext);
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
   const { totalContext } = useContext(TotalContext);
+  const { moneyUpdateContext, setMoneyUpdateContext } =
+    useContext(MoneyUpdateContext);
+
   const clearCartValue = {};
   const clearCartValueTotal = 0.0;
   const navigate = useNavigate();
+
+  //network money calls
+  const networkCallsForPoints = async () => {
+    try {
+      // Make the signup API request
+
+      const response = await fetch(`http://localhost:3000/money/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          buyer: user.id,
+          deduction: totalContext * 100,
+          moneyUpdateContext,
+        }),
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const newUser = data.updatedMoney;
+        updateUser(newUser);
+      }
+    } catch (error) {
+      // Handle any network or API request errors
+      alert("money update failed: " + error);
+    }
+  };
 
   const postOrders = async (id) => {
     try {
@@ -51,7 +87,7 @@ const CheckoutCart = () => {
       });
 
       if (response.ok) {
-        navigate("/");
+        navigate("/success");
       }
     } catch (error) {
       // Handle any network or API request errors
@@ -59,12 +95,15 @@ const CheckoutCart = () => {
     }
   };
 
-  console.log("hi");
   return (
     <div className="checkout-cart">
-      <h3>Click here to confirm checkout</h3>
+      <h3>Goodnews, Your points are adequate to make this purchase. </h3>
+      <h3>Click below to confirm checkout. </h3>
+      <h4>This purchase will cost you {totalContext * 100} points</h4>
+
       <button
         onClick={() => {
+          networkCallsForPoints();
           postOrders(user.id);
           clearCart(user.id);
         }}

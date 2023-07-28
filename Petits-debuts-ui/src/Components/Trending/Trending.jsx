@@ -163,6 +163,12 @@ export default function Trending({
   //useEffect for other carts and orders
   useEffect(() => {
     let totalOthers = TotalOther;
+    //set all to zero
+    function setAllOthersToZero(tempTrending) {
+      Object.entries(tempTrending).map(([key, value]) => {
+        tempTrending[key].others = 0;
+      });
+    }
     //cart
     function loopThroughCart(cart, tempTrending) {
       Object.entries(cart).map(([key, value]) => {
@@ -195,15 +201,20 @@ export default function Trending({
 
     if (
       (trending && Object.keys(trending).length != 0 && TotalOther === 0) ||
-      (!TotalOther && trending && Object.keys(trending).length != 0)
+      (!TotalOther && trending && Object.keys(trending).length != 0) ||
+      (TotalOther != 0 &&
+        TotalOther != null &&
+        trending &&
+        Object.keys(trending).length != 0)
     ) {
       const tempTrending2 = { ...trending };
+      setAllOthersToZero(tempTrending2);
       loopThroughOtherCarts(tempTrending2);
       loopThroughOtherOrders(tempTrending2);
       setTotalOther(totalOthers);
       saveTotalOtherData(totalOthers);
     }
-  }, [TotalOther]);
+  }, [productContext]);
   // // //end
 
   return (
