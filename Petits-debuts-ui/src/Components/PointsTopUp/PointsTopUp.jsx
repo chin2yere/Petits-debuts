@@ -1,13 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./PayPal.css";
-import {
-  UserContext,
-  CartContext,
-  TotalContext,
-  MoneyUpdateContext,
-  CheckoutTypeContext,
-} from "../../UserContext.js";
+import "./PointsTopUp.css";
+import { UserContext } from "../../UserContext.js";
 
 import {
   PayPalScriptProvider,
@@ -17,11 +11,7 @@ import {
 //this function returns the buttons
 const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-  const { moneyUpdateContext, setMoneyUpdateContext } =
-    useContext(MoneyUpdateContext);
   const { user, updateUser } = useContext(UserContext);
-  const { totalContext } = useContext(TotalContext);
-  const { checkoutTypeContext } = useContext(CheckoutTypeContext);
   const navigate = useNavigate();
   //this function updates the bank
   const updateBank = async () => {
@@ -35,7 +25,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
         },
         body: JSON.stringify({
           buyer: user.id,
-          deduction: totalContext * 100 - user.money,
+          deduction: parseInt(amount) * 100,
         }),
         credentials: "include",
       });
@@ -44,11 +34,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
         const newUser = data.updatedMoney;
         updateUser(newUser);
 
-        if (checkoutTypeContext === "goods") {
-          navigate("/checkoutcart");
-        } else if (checkoutTypeContext === "service") {
-          navigate("/checkoutservices");
-        }
+        navigate("/");
       }
     } catch (error) {
       // Handle any network or API request errors
@@ -102,33 +88,34 @@ const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
 };
 
 const PayPal = () => {
-  const { cartContext, setCartContext } = useContext(CartContext);
   const { user } = useContext(UserContext);
-  const { totalContext } = useContext(TotalContext);
-  const { moneyUpdateContext, setMoneyUpdateContext } =
-    useContext(MoneyUpdateContext);
+  const [amount, setAmount] = useState("");
 
   const clearCartValue = {};
   const clearCartValueTotal = 0.0;
   const navigate = useNavigate();
-  const amount = String((totalContext * 100 - user.money) / 100);
+
   const currency = "USD";
   const style = { layout: "vertical" };
 
-  useEffect(() => {
-    localStorage.setItem(
-      "moneyUpdateContext",
-      JSON.stringify(moneyUpdateContext)
-    );
-  }, [moneyUpdateContext]);
+  function calculateAmount(amount) {
+    if (amount === "") {
+      return "1";
+    } else {
+      return String(amount / 100);
+    }
+  }
 
   return (
     <div className="paypal">
-      <h3>Oops! you are short by {totalContext * 100 - user.money}</h3>
-      <h4>
-        To complete this purchase, you will need a total of {totalContext * 100}
-        points
-      </h4>
+      <h3>Enter top up amount in points</h3>
+      <h5>Please note, 100points = 1 dollar</h5>
+      <input
+        type="text"
+        id="username"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
       <h5>Purchase more points using the methods below</h5>
       <div style={{ maxWidth: "750px", minHeight: "200px" }}>
         <PayPalScriptProvider
@@ -142,7 +129,7 @@ const PayPal = () => {
           <ButtonWrapper
             currency={currency}
             showSpinner={false}
-            amount={amount}
+            amount={calculateAmount(amount)}
             style={style}
           />
         </PayPalScriptProvider>
