@@ -37,6 +37,7 @@ Icon
 
 # api key
 api-key.js
+api_key.js
 
 # Directories potentially created on remote AFP share
 .AppleDB

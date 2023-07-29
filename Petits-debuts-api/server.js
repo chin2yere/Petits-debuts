@@ -7,6 +7,8 @@ import { sequelize } from "./database.js";
 import { User, Business, Cart, Order, Product } from "./models/index.js";
 import router from "./Routes/users.js";
 import SequelizeStoreInit from "connect-session-sequelize";
+import { SENDGRID_API_KEY } from "./api_key.js";
+import sgMail from "@sendgrid/mail";
 
 const app = express();
 
@@ -42,6 +44,7 @@ app.use(
 sessionStore.sync();
 
 app.use(router);
+sgMail.setApiKey(SENDGRID_API_KEY);
 
 // Route to get all business, with associated users
 app.get("/business", async (req, res) => {
@@ -292,6 +295,25 @@ app.post("/money/update", async (req, res) => {
           });
         }
       }
+      const msg = {
+        to: "chinyereoffor@meta.com", // Change to your recipient
+        from: "chinyereofformeta@gmail.com", // Change to your verified sender
+        subject: "Order Confirmation",
+        text: "Thank you for your order. It will be processed immediately",
+        html: "<h3>Thank you for your order.</h3><br><h5>We appreciate you picking us out of the wide variety of platforms out there<br></h5><strong>Please keep an eye out for shipping updates</strong>",
+      };
+      const sendEmail = async (msg) => {
+        try {
+          await sgMail.send(msg);
+          console.log("Message sent successfully");
+        } catch (error) {
+          console.error(error);
+          if (error.response) {
+            console.error(error.response.body);
+          }
+        }
+      };
+      sendEmail(msg);
 
       res.json({ updatedMoney });
     }
