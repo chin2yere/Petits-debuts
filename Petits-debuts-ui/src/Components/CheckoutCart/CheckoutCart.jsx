@@ -33,6 +33,7 @@ const CheckoutCart = () => {
           buyer: user.id,
           deduction: totalContext * 100,
           moneyUpdateContext,
+          context: cartContext,
         }),
         credentials: "include",
       });

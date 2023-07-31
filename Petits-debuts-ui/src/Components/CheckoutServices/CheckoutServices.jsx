@@ -32,6 +32,7 @@ const CheckoutServices = () => {
           buyer: user.id,
           deduction: totalContext * 100,
           moneyUpdateContext,
+          context: serviceContext,
         }),
         credentials: "include",
       });

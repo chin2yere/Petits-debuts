@@ -9,6 +9,8 @@ import router from "./Routes/users.js";
 import SequelizeStoreInit from "connect-session-sequelize";
 import { SENDGRID_API_KEY } from "./api_key.js";
 import sgMail from "@sendgrid/mail";
+import cron from "node-cron";
+import { INTEGER } from "sequelize";
 
 const app = express();
 
@@ -272,8 +274,8 @@ app.post("/buyer/topup", async (req, res) => {
 //end
 //points manipulation
 app.post("/money/update", async (req, res) => {
-  const { buyer, deduction, moneyUpdateContext } = req.body;
-  //console.log(req.body);
+  const { buyer, deduction, moneyUpdateContext, context } = req.body;
+
   try {
     // find all the user's orders
     const topupUser = await User.findOne({
@@ -295,12 +297,21 @@ app.post("/money/update", async (req, res) => {
           });
         }
       }
+      let orderList = "";
+      for (const [key, value] of Object.entries(context)) {
+        const productName = await Product.findOne({
+          where: { id: key },
+        });
+        orderList += productName.product_name;
+        orderList += ", ";
+      }
+
       const msg = {
         to: "chinyereoffor@meta.com", // Change to your recipient
         from: "chinyereofformeta@gmail.com", // Change to your verified sender
         subject: "Order Confirmation",
         text: "Thank you for your order. It will be processed immediately",
-        html: "<h3>Thank you for your order.</h3><br><h5>We appreciate you picking us out of the wide variety of platforms out there<br></h5><strong>Please keep an eye out for shipping updates</strong>",
+        html: `<h3>Thank you for your order for ${orderList}.</h3><br><h5>We appreciate you picking us out of the wide variety of platforms out there<br></h5><strong>Please keep an eye out for shipping updates</strong>`,
       };
       const sendEmail = async (msg) => {
         try {
@@ -324,8 +335,71 @@ app.post("/money/update", async (req, res) => {
 });
 //end
 
-//end
+//end of routes
+//node-cron to run at midnight every day
+cron.schedule("0 0 * * *", function () {
+  const isServiceOrder = (obj) => {
+    const firstValue = obj[Object.keys(obj)[0]];
+    if (typeof firstValue !== "number") {
+      return true;
+    } else {
+      return false;
+    }
 
+    //return firstValue instanceof Date;
+  };
+  const getAllServiceOrders = async () => {
+    try {
+      const serviceOrder = await Order.findAll({
+        include: [{ model: User, as: "user" }],
+        order: [["createdAt", "DESC"]],
+      });
+      for (let i = 0; i < serviceOrder.length; i++) {
+        console.log("inside for loop");
+        if (isServiceOrder(serviceOrder[i].order)) {
+          console.log("inside if statement");
+          for (const [key, value] of Object.entries(serviceOrder[i].order)) {
+            const today = new Date();
+            const appointment = new Date(value);
+            const day = appointment.getUTCDate().toString().padStart(2, "0");
+            const month = (appointment.getUTCMonth() + 1)
+              .toString()
+              .padStart(2, "0");
+
+            if (appointment > today) {
+              const product = await Product.findOne({
+                where: { id: key },
+              });
+              const msg = {
+                to: "chinyereoffor@meta.com", // Change to your recipient
+                from: "chinyereofformeta@gmail.com", // Change to your verified sender
+                subject: "Appointment Reminder",
+                text: "Thank you for your order. It will be processed immediately",
+                html: `<h3>This is a reminder of your upcoming appointment with ${product.product_name}.</h3><br><h5>This appointment will take place on the ${day} of ${month}<br></h5><strong>Please take note</strong>`,
+              };
+              const sendEmail = async (msg) => {
+                try {
+                  await sgMail.send(msg);
+                  console.log("Message sent successfully");
+                } catch (error) {
+                  console.error(error);
+                  if (error.response) {
+                    console.error(error.response.body);
+                  }
+                }
+              };
+              sendEmail(msg);
+            }
+          }
+        }
+      }
+    } catch {}
+  };
+  getAllServiceOrders();
+
+  console.log("running a task every minute");
+});
+//end of node-cron
 sequelize
   .sync({ alter: true })
   .then(() => {
