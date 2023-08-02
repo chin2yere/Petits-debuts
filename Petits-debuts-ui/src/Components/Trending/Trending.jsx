@@ -27,7 +27,7 @@ export default function Trending({
   const { trending, setTrending } = useContext(TrendingContext);
   const { productContext } = useContext(ProductContext);
   const { TotalOther, setTotalOther } = useContext(TotalOtherContext);
-  const thresholdMinimumScore = 70;
+  const THRESHOLD_MINIMUM_SCORE = 70;
 
   function saveTotalOtherData(data) {
     localStorage.setItem("TotalOther", String(data));
@@ -231,26 +231,32 @@ export default function Trending({
             //typically each product is rated on a score out of 120
             //but an absence of one or more pillar can reduce the total score to as low as 80
             //we have to scale up to 120 regardless because our threshold mark is 70
+            //if no recent orders by the user
             if (
               Object.keys(personalCart).length === 0 &&
               orderContext.length !== 0
             ) {
-              //this part scales up the score to 120 from 80
-              score = (score * 120) / 95;
+              const maximum_attainable_score = 95;
+              //this part scales up the score to 120 from 95
+              score = (score * 120) / maximum_attainable_score;
             } else if (
+              //if the cart is empty
               Object.keys(personalCart).length !== 0 &&
               orderContext.length === 0
             ) {
+              const maximum_attainable_score = 105;
               //this part scales up the score to 120 from 105
-              score = (score * 120) / 105;
+              score = (score * 120) / maximum_attainable_score;
             } else if (
+              //if no recent orders and the cart is empty
               Object.keys(personalCart).length === 0 &&
               orderContext.length === 0
             ) {
+              const maximum_attainable_score = 80;
               //this part scales up the score to 120 from 80
-              score = (score * 120) / 80;
+              score = (score * 120) / maximum_attainable_score;
             }
-            if (score >= thresholdMinimumScore) {
+            if (score >= THRESHOLD_MINIMUM_SCORE) {
               const product = productContext.find((obj) => {
                 if (obj.id.toString() === key) {
                   return obj;
