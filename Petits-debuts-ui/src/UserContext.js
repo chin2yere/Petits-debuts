@@ -10,6 +10,7 @@ const TrendingContext = createContext();
 const TotalOtherContext = createContext();
 const MoneyUpdateContext = createContext();
 const CheckoutTypeContext = createContext();
+const IdContext = createContext();
 export {
   UserContext,
   CartContext,
@@ -21,4 +22,5 @@ export {
   TotalOtherContext,
   MoneyUpdateContext,
   CheckoutTypeContext,
+  IdContext,
 };

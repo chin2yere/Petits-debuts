@@ -31,19 +31,19 @@ I was fortunate enough to stumble on this side when I helped my friend manage he
 1. Users can login
 2. Users can create account
 3. Users can create business account
-4. The app should be able to pull data from a database and display a business by their name, rating, cover photos and average prices.
-5. There they will be able to check rating and add products to their cart/ schedule a service depending on the business type
+4. The app should be able to pull data from a database and display a business by their name, cover photos and average prices.
+5. There they will be able to like products and add products to their cart/ schedule a service depending on the business type
 6. Users can search for businesses or filter the suggested businesses based on location or other categories
-7. Users will be able to view their recent purchases and leave a rating
+7. Users will be able to view their recent purchases
 8. A business owner will be able to switch mode to a customer and vice versa
 
 Optional
 
-1. There is a functionality to invest in a business
-2. Users will be able to update the status of an upcoming appointment
-3. Users will be able to select the businesses they want and go to the business profile page
-4. Investors can see the success rate and possibility of growth for businesses
-5. Investors can schedule meetings with businesses
+1. Users will have the ability to topup points at will.
+2. Users will be prevented from scheduling an impromptu assignment
+3. Appointment availability will be strictly based on the business owner's preference
+4. User's can like/dislike a product, and the database will be updated in real time.
+5. User's are prevented from hoarding time slots. Appointments are only scheduled upon payment.
 6. Advertisement videos/gifs will be displayed on the homepage
 7. There will be a map feature for service based businesses
 8. Business owners can collaborate
@@ -69,8 +69,35 @@ User Stories
 
 The homepage will be a combination of different Api’s that will generate suggestions based on trending stores/deals, recent purchases, and location.
 
+We have five pillars for measuring a products recommmendability
+
+1. Recent- if the product is in the top 50% of the user's recent purchases, award 15%
+   if the product is in bottom 50% award 10%
+   if not, award 0
+
+2. Location- if the product is in the same location, award 20%, if not, award 0
+
+3. cart- if the product is in the user's cart, award 25% , if not, award 0
+
+4. Others- we go through the entire cart and order database. If 30% of distinct users have it , award 20%, if 20% of distinct users have it, award 15%, if 10% of distinct users have it, award 10%
+
+5. Likes- if the product is in the user likes, award 40 (i made it 40 instead of 20 to make the like feature a strong determinant like you requested)
+
+there are exemptions: if either, or both of the cart, or user's orders is empty, calculate the score normally, and scale up to hundred.
+
 # Technical Challenge #2
 
 # What
 
 There will be a payment functionality that will allow users to pay for goods/services; There will also be a receipt that will be generated per transaction, and it will be sent to the user’s email.
+
+For my technical challenge 2, I am implementing payment functionality.
+I originally planned to use mastercard Apis but I was discouraged due to the rigidity of the api. I wanted an api package that would not rely solely on credit/debit card info. I preferred a method that will enable a user to pay using already established payments methods in industry today.
+I settled on paypal because the process of learning to use the api was not as difficult as the others.
+For this challenge, I mirrored a typical checkout system as displayed by amazon, etsy, etc, and ensured that payment is only confirmed after the payment process is successful, with correct payment details and sufficient funds.
+
+The second part of the technical challenge required me to use sendgrid to send payment confirmation emails to the customer after payment
+
+The third part of the challenge requires me to use node-cron to send scheduled reminders.
+
+Each time, there will be an api call to my orders table on my database. The code will specifically look for appointments and ignore the typical product orders. After that, all appointments will be categorized into 3 past appointments, current appointments, future appointments. past appointments will be ignored, for current appointments, and email will be sent out: You are currently on your … appointment with …, Please reach out if you have any difficulties. For future appointments, an email will be sent out: This is an email reminder for your appointment … with … at … on ….

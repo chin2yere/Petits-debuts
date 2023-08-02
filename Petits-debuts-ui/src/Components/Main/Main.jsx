@@ -183,9 +183,7 @@ function Main() {
     }
   };
   //end
-  //Technical challenge
 
-  //end
   const handleChange = (event) => {
     setForm({
       ...form,
