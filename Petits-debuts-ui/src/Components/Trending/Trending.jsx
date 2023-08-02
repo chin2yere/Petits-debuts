@@ -216,18 +216,38 @@ export default function Trending({
     }
   }, [productContext]);
   // // //end
+  // function cutOffMark(){
+  //   if((Object.keys(personalCart).length === 0)&& orderContext.length!==0)
+  // }
 
   return (
     <div className="trending">
       <div className="card-trending">
         {trending &&
           Object.entries(trending).map(([key, value]) => {
-            const score =
+            let score =
               value.recent +
               value.location +
               value.like +
               value.cart +
               calculateOtherScore(value.others);
+            //logic for exceptions
+            if (
+              Object.keys(personalCart).length === 0 &&
+              orderContext.length !== 0
+            ) {
+              score = (score * 120) / 95;
+            } else if (
+              Object.keys(personalCart).length !== 0 &&
+              orderContext.length === 0
+            ) {
+              score = (score * 120) / 105;
+            } else if (
+              Object.keys(personalCart).length === 0 &&
+              orderContext.length === 0
+            ) {
+              score = (score * 120) / 80;
+            }
             if (score >= 70) {
               const product = productContext.find((obj) => {
                 if (obj.id.toString() === key) {

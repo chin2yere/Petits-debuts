@@ -11,6 +11,7 @@ import {
   TotalOtherContext,
   MoneyUpdateContext,
   CheckoutTypeContext,
+  IdContext,
 } from "./UserContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./Components/Main/Main";
@@ -24,8 +25,21 @@ import CheckoutServices from "./Components/CheckoutServices/CheckoutServices";
 import PayPal from "./Components/PayPal/PayPal";
 import Success from "./Components/Success/Success";
 import PointsTopUp from "./Components/PointsTopUp/PointsTopUp";
+import BusinessForm from "./Components/BusinessForm/Business.form";
+import ProductForm from "./Components/ProductForm/ProductForm";
 function App() {
   const [totalContext, setTotalContext] = useState(0);
+  const [idContext, setIdContext] = useState(() => {
+    try {
+      // Retrieve the product data from storage or set it to null if not found
+      const storedid = localStorage.getItem("idContext");
+      return storedid ? parseInt(storedid, 10) : null;
+    } catch (error) {
+      console.error("Error parsing stored id:", error);
+      return null;
+    }
+  });
+
   const [checkoutTypeContext, setCheckoutTypeContext] = useState(() => {
     try {
       // Retrieve the product data from storage or set it to null if not found
@@ -158,33 +172,57 @@ function App() {
                             setCheckoutTypeContext,
                           }}
                         >
-                          <BrowserRouter>
-                            <Routes>
-                              <Route
-                                path="/"
-                                element={user ? <Main /> : <LoginForm />}
-                              />
-                              <Route path="/login" element={<LoginForm />} />
-                              <Route path="/signup" element={<SignupForm />} />
-                              <Route
-                                path="/businessmain"
-                                element={<BusinessHome />}
-                              />
-                              <Route path="/cart" element={<Cart />} />
-                              <Route path="/order" element={<RecentOrders />} />
-                              <Route
-                                path="/checkoutcart"
-                                element={<CheckoutCart />}
-                              />
-                              <Route
-                                path="/checkoutservices"
-                                element={<CheckoutServices />}
-                              />
-                              <Route path="/buyPoints" element={<PayPal />} />
-                              <Route path="/success" element={<Success />} />
-                              <Route path="/topup" element={<PointsTopUp />} />
-                            </Routes>
-                          </BrowserRouter>
+                          <IdContext.Provider
+                            value={{
+                              idContext,
+                              setIdContext,
+                            }}
+                          >
+                            <BrowserRouter>
+                              <Routes>
+                                <Route
+                                  path="/"
+                                  element={user ? <Main /> : <LoginForm />}
+                                />
+                                <Route path="/login" element={<LoginForm />} />
+                                <Route
+                                  path="/signup"
+                                  element={<SignupForm />}
+                                />
+                                <Route
+                                  path="/businessmain"
+                                  element={<BusinessHome />}
+                                />
+                                <Route path="/cart" element={<Cart />} />
+                                <Route
+                                  path="/order"
+                                  element={<RecentOrders />}
+                                />
+                                <Route
+                                  path="/checkoutcart"
+                                  element={<CheckoutCart />}
+                                />
+                                <Route
+                                  path="/checkoutservices"
+                                  element={<CheckoutServices />}
+                                />
+                                <Route path="/buyPoints" element={<PayPal />} />
+                                <Route path="/success" element={<Success />} />
+                                <Route
+                                  path="/topup"
+                                  element={<PointsTopUp />}
+                                />
+                                <Route
+                                  path="/businessForm"
+                                  element={<BusinessForm />}
+                                />
+                                <Route
+                                  path="/productForm"
+                                  element={<ProductForm />}
+                                />
+                              </Routes>
+                            </BrowserRouter>
+                          </IdContext.Provider>
                         </CheckoutTypeContext.Provider>
                       </MoneyUpdateContext.Provider>
                     </TotalOtherContext.Provider>

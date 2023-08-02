@@ -124,6 +124,115 @@ app.post("/mycart", async (req, res) => {
   }
 });
 
+//route to get user's business
+app.post("/mybusiness", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    // find all the user's business
+    const userBusiness = await Business.findAll({
+      where: { userId: id },
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.json({ userBusiness });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+//end
+
+//route to get business product
+app.post("/mybusiness/product", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    // find all the user's business
+    const userBusinessProduct = await Product.findAll({
+      where: { businessId: id },
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.json({ userBusinessProduct });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+//end
+//route to create new product
+app.post("/product/create", async (req, res) => {
+  const {
+    name,
+    category,
+    description,
+    price,
+    quantity,
+    service,
+    availability,
+    idContext,
+  } = req.body;
+
+  try {
+    // Create a new order
+    function returnAvailability(service, availability) {
+      if (service) {
+        return availability;
+      } else {
+        return null;
+      }
+    }
+
+    const newProduct = await Product.create({
+      product_name: name,
+      category: category,
+      description: description,
+      price: price,
+      total_quantity: quantity,
+      picture_url: "/Pictures/food.avif",
+      service: service,
+      availability: returnAvailability(service, availability),
+      likes: {},
+      businessId: idContext,
+    });
+
+    // Return the user data in the response
+    res.json({ newProduct });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+//
+
+//route to create new business
+app.post("/business/create", async (req, res) => {
+  const { name, location, service, idContext } = req.body;
+
+  try {
+    // Create a new business
+
+    const newBusiness = await Business.create({
+      name: name,
+      picture_url: "/Pictures/business-background.jpeg",
+      service: service,
+      rating: 4,
+      location: location,
+      userId: idContext,
+    });
+
+    // Return the user data in the response
+    res.json({ newBusiness });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+//
+
 // Route to create a new business
 
 app.post("/business", async (req, res) => {
@@ -238,11 +347,7 @@ app.post("/myorder", async (req, res) => {
       order: [["createdAt", "DESC"]],
     });
 
-    if (userOrder.length != 0) {
-      res.json({ userOrder });
-    } else {
-      res.json(null);
-    }
+    res.json({ userOrder });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
@@ -345,8 +450,6 @@ cron.schedule("0 0 * * *", function () {
     } else {
       return false;
     }
-
-    //return firstValue instanceof Date;
   };
   const getAllServiceOrders = async () => {
     try {
@@ -355,9 +458,7 @@ cron.schedule("0 0 * * *", function () {
         order: [["createdAt", "DESC"]],
       });
       for (let i = 0; i < serviceOrder.length; i++) {
-        console.log("inside for loop");
         if (isServiceOrder(serviceOrder[i].order)) {
-          console.log("inside if statement");
           for (const [key, value] of Object.entries(serviceOrder[i].order)) {
             const today = new Date();
             const appointment = new Date(value);
@@ -396,8 +497,6 @@ cron.schedule("0 0 * * *", function () {
     } catch {}
   };
   getAllServiceOrders();
-
-  console.log("running a task every minute");
 });
 //end of node-cron
 sequelize

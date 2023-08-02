@@ -1,0 +1,21 @@
+.row-recentOrders {
+  display: flex;
+
+  color: black;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  width: 800px;
+}
+.col-recentOrders {
+  flex: 50%;
+}
+.col2-recentOrders {
+  flex: 50%;
+  background-color: rgb(251, 255, 185);
+
+  border-radius: 8px;
+}
+image {
+  width: 70px;
+  height: 70px;
+}
