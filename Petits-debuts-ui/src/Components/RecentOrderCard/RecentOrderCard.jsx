@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./RecentOrderCard.css";
 import thankYou from "../Pictures/thankYou.png";
-
+// this page designs the cards that are displayed on the recent order's page
 export default function RecentOrderCard({ name, category }) {
   return (
     <section className="recentOrderCard">

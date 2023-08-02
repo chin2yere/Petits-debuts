@@ -3,7 +3,7 @@ import "./BusinessForm.css";
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext, IdContext } from "../../UserContext";
-
+//this page basically collects information that is needed to make a network call to create a new business
 export default function ProductForm() {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
@@ -32,7 +32,7 @@ export default function ProductForm() {
     e.preventDefault();
 
     try {
-      // Make the login API request
+      // Make the create business API request
 
       const response = await fetch(`http://localhost:3000/business/create`, {
         method: "POST",
@@ -52,7 +52,7 @@ export default function ProductForm() {
         // Navigate to the business page after successful login
         navigate("/businessmain");
       } else {
-        // Handle the login failure case
+        // Handle the creation failure case
         alert("creation failed");
       }
     } catch (error) {

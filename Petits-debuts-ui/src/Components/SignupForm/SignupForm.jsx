@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignupForm.css";
 import { UserContext } from "../../UserContext.js";
-
+//this page collects all information required to create a new user
 const SignupForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -38,9 +38,6 @@ const SignupForm = () => {
       if (response.ok) {
         const data = await response.json();
         const loggedInUser = data.user;
-
-        console.log("Signup successful");
-
         // Reset form fields
         setUsername("");
         setEmail("");

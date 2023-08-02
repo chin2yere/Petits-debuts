@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./CartCard.css";
-
+//this page designs the cards that are displayed on the cart page
 export default function CartCard({
   picture_url,
   name,

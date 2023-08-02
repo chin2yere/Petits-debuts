@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./PayPal.css";
 import {
   UserContext,
   CartContext,
@@ -14,6 +13,8 @@ import {
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+//this page handles the process of buying new points when a user tries to checkout with insufficient funds
+
 //this function returns the buttons
 const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
@@ -26,7 +27,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
   //this function updates the bank
   const updateBank = async () => {
     try {
-      // Make the signup API request
+      // Make the bank update API request
 
       const response = await fetch(`http://localhost:3000/buyer/topup`, {
         method: "POST",
@@ -55,7 +56,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
       alert("money update failed: " + error);
     }
   };
-  //end of bank
+  //end of bank update
 
   useEffect(() => {
     dispatch({
@@ -87,7 +88,6 @@ const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
               ],
             })
             .then((orderId) => {
-              // Your code here after create the order
               return orderId;
             });
         }}

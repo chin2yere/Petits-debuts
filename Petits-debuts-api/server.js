@@ -60,7 +60,8 @@ app.get("/business", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-//route to get all products
+//end
+//route to get all products with associated businesses
 app.get("/product", async (req, res) => {
   try {
     const product = await Product.findAll({
@@ -72,7 +73,8 @@ app.get("/product", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-//route to get all orders
+//end
+//route to get all orders with associated users
 app.get("/order", async (req, res) => {
   try {
     const order = await Order.findAll({
@@ -84,7 +86,8 @@ app.get("/order", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-//route to get all carts
+//end
+//route to get all carts with associated users
 app.get("/cart", async (req, res) => {
   try {
     const cart = await Cart.findAll({
@@ -96,7 +99,8 @@ app.get("/cart", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-//route to access users cart
+//end
+//route to access logged in users cart
 app.post("/mycart", async (req, res) => {
   const { id } = req.body;
   const cartPlaceHolder = {};
@@ -109,13 +113,14 @@ app.post("/mycart", async (req, res) => {
     if (existingCart) {
       res.json({ usercart: existingCart });
     } else if (!existingCart) {
+      //if the cart doesn't exist
       // Create a new cart
       const newCart = await Cart.create({
         userId: id,
         cart: cartPlaceHolder,
         total: totalPlaceHolder,
       });
-      // Return the user data in the response
+      // Return the cart data in the response
       res.json({ usercart: newCart });
     }
   } catch (error) {
@@ -123,8 +128,8 @@ app.post("/mycart", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
-//route to get user's business
+//end
+//route to get logged in user's business
 app.post("/mybusiness", async (req, res) => {
   const { id } = req.body;
 
@@ -144,12 +149,12 @@ app.post("/mybusiness", async (req, res) => {
 
 //end
 
-//route to get business product
+//route to get each business products
 app.post("/mybusiness/product", async (req, res) => {
   const { id } = req.body;
 
   try {
-    // find all the user's business
+    // find all the user's business products
     const userBusinessProduct = await Product.findAll({
       where: { businessId: id },
       order: [["createdAt", "DESC"]],
@@ -161,9 +166,8 @@ app.post("/mybusiness/product", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
 //end
-//route to create new product
+//route to create new product for a specified business
 app.post("/product/create", async (req, res) => {
   const {
     name,
@@ -177,7 +181,7 @@ app.post("/product/create", async (req, res) => {
   } = req.body;
 
   try {
-    // Create a new order
+    // Create a new product
     function returnAvailability(service, availability) {
       if (service) {
         return availability;
@@ -199,16 +203,16 @@ app.post("/product/create", async (req, res) => {
       businessId: idContext,
     });
 
-    // Return the user data in the response
+    // Return the product data in the response
     res.json({ newProduct });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 });
-//
+//end
 
-//route to create new business
+//route to create new business for a user
 app.post("/business/create", async (req, res) => {
   const { name, location, service, idContext } = req.body;
 
@@ -224,44 +228,14 @@ app.post("/business/create", async (req, res) => {
       userId: idContext,
     });
 
-    // Return the user data in the response
+    // Return the business data in the response
     res.json({ newBusiness });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 });
-//
-
-// Route to create a new business
-
-app.post("/business", async (req, res) => {
-  try {
-    // Check if user is logged in
-    if (!req.session.user) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    // Retrieve the current user from the session
-    const currentUser = req.session.user;
-
-    // Create the post with the current user ID
-    const business = await Business.create({
-      ...req.body,
-      userId: currentUser.id,
-    });
-
-    const businessWithUser = await Business.findOne({
-      where: { id: business.id },
-      include: [{ model: User, as: "user" }],
-    });
-
-    res.status(201).json(businessWithUser);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
+//end
 // route to post an order
 app.post("/order/post", async (req, res) => {
   const { cartContext, totalContext, id } = req.body;
@@ -273,17 +247,16 @@ app.post("/order/post", async (req, res) => {
       total: totalContext,
       userId: id,
     });
-    console.log(1);
 
-    // Return the user data in the response
+    // Return the order data in the response
     res.json({ neworder });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 });
-////end
-//route to delete cart
+//end
+//route to delete cart after purchase
 app.post("/cart/delete", async (req, res) => {
   const { clearCartValue, clearCartValueTotal, id } = req.body;
 
@@ -310,8 +283,8 @@ app.post("/cart/delete", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-//updatelikes
-
+//end
+//route to update the likes and dislikes of a product
 app.post("/likes/update", async (req, res) => {
   const { tempLikes, id } = req.body;
 
@@ -333,9 +306,8 @@ app.post("/likes/update", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
 //end
-// my order
+// route to get a logged in user's past orders
 app.post("/myorder", async (req, res) => {
   const { id } = req.body;
 
@@ -354,13 +326,12 @@ app.post("/myorder", async (req, res) => {
   }
 });
 //end
-
-// money update
+// route to update a user's points upon purchase
 app.post("/buyer/topup", async (req, res) => {
   const { buyer, deduction } = req.body;
-  console.log(req.body);
+
   try {
-    // find all the user's orders
+    // find the user
     const topupUser = await User.findOne({
       where: { id: buyer },
     });
@@ -377,12 +348,13 @@ app.post("/buyer/topup", async (req, res) => {
   }
 });
 //end
-//points manipulation
+//route to subtract points from a purchaser, distribute the points among
+//product owners, and send confirmation email using send box
 app.post("/money/update", async (req, res) => {
   const { buyer, deduction, moneyUpdateContext, context } = req.body;
 
   try {
-    // find all the user's orders
+    // find all the buyer
     const topupUser = await User.findOne({
       where: { id: buyer },
     });
@@ -402,6 +374,7 @@ app.post("/money/update", async (req, res) => {
           });
         }
       }
+      //this part of the code get's the information on what was actually purchased
       let orderList = "";
       for (const [key, value] of Object.entries(context)) {
         const productName = await Product.findOne({
@@ -412,7 +385,7 @@ app.post("/money/update", async (req, res) => {
       }
 
       const msg = {
-        to: "chinyereoffor@meta.com", // Change to your recipient
+        to: topupUser.email, // Change to your recipient
         from: "chinyereofformeta@gmail.com", // Change to your verified sender
         subject: "Order Confirmation",
         text: "Thank you for your order. It will be processed immediately",
@@ -439,7 +412,6 @@ app.post("/money/update", async (req, res) => {
   }
 });
 //end
-
 //end of routes
 //node-cron to run at midnight every day
 cron.schedule("0 0 * * *", function () {
@@ -471,8 +443,9 @@ cron.schedule("0 0 * * *", function () {
               const product = await Product.findOne({
                 where: { id: key },
               });
+              const recepient_email = serviceOrder[i].user.email;
               const msg = {
-                to: "chinyereoffor@meta.com", // Change to your recipient
+                to: recepient_email, // Change to your recipient
                 from: "chinyereofformeta@gmail.com", // Change to your verified sender
                 subject: "Appointment Reminder",
                 text: "Thank you for your order. It will be processed immediately",

@@ -14,6 +14,7 @@ import Trending from "../Trending/Trending";
 import Search from "../Search/Search";
 import ProductGrid from "../ProductGrid/ProductGrid";
 import TopBar from "../TopBar/TopBar";
+import Footer from "../Footer/Footer";
 
 function Main() {
   const { user, updateUser } = useContext(UserContext);
@@ -31,7 +32,6 @@ function Main() {
   const [search, setSearch] = useState("");
   const [personalCart, setPersonalCart] = useState({});
   const [serviceWallet, setServiceWallet] = useState({});
-  //const [trending, setTrending] = useState({});
   const [allCarts, setAllCarts] = useState([]);
   const [allOrders, setAllOrders] = useState([]);
 
@@ -51,10 +51,10 @@ function Main() {
   function saveProductContext(data) {
     localStorage.setItem("productContext", JSON.stringify(data));
   }
+  //end
 
-  //end
-  //end
   useEffect(() => {
+    //this function fetches all products
     const fetchAllProducts = async () => {
       const response = await fetch("http://localhost:3000/product");
       const data = await response.json();
@@ -62,9 +62,10 @@ function Main() {
       setProductContext(data);
       saveProductContext(data);
     };
+    //this function fetches the user's cart
     const fetchCart = async (id) => {
       try {
-        // Make the signup API request
+        // Make the fetch cart API request
         const response = await fetch(`http://localhost:3000/mycart`, {
           method: "POST",
           headers: {
@@ -80,13 +81,11 @@ function Main() {
           const data = await response.json();
           const loggedInUserCart = data.usercart;
 
-          console.log("Cart access successful");
-
-          // Update the user context
+          // Update the cart context
           updateCart(loggedInUserCart);
           setPersonalCart(loggedInUserCart.cart);
         } else {
-          // Handle signup failure case
+          // Handle cart access failure case
           alert("Cart access failed");
         }
       } catch (error) {
@@ -95,10 +94,10 @@ function Main() {
       }
     };
 
-    //fetch orders
+    //this function fetches the list of logged in user's past orders
     const fetchOrder = async (id) => {
       try {
-        // Make the signup API request
+        // Make the fetch order API request
         const response = await fetch(`http://localhost:3000/myorder`, {
           method: "POST",
           headers: {
@@ -114,13 +113,11 @@ function Main() {
           const data = await response.json();
           const loggedInUserOrder = data.userOrder;
 
-          console.log("order access successful");
-
-          // Update the user context
+          // Update the order context
           setOrderContext(loggedInUserOrder);
           saveOrderData(loggedInUserOrder);
         } else {
-          // Handle signup failure case
+          // Handle sorder access failure case
           alert("Order access failed");
         }
       } catch (error) {
@@ -128,17 +125,15 @@ function Main() {
         alert("Order failed: " + error);
       }
     };
-
     //end
-    //get cart
+    //this function gets all the carts in the database for the trending algorithm
     const fetchAllCarts = async () => {
       const response = await fetch("http://localhost:3000/cart");
       const data = await response.json();
       setAllCarts(data);
     };
-
     //end
-    //get order
+    //this function gets all the orders in the database for the trending algorithm
     const fetchAllOrders = async () => {
       const response = await fetch("http://localhost:3000/order");
       const data = await response.json();
@@ -146,23 +141,20 @@ function Main() {
     };
     //end
 
-    //end
     fetchAllProducts();
     fetchCart(user.id);
     fetchOrder(user.id);
     fetchAllCarts();
     fetchAllOrders();
-    //createTrendingFormat();
   }, []);
-  //save cart on logout
-
+  //this function saves the user's cart upon logout
   const saveCart = async (id) => {
     if (
       !(Object.keys(personalCart).length === 0) ||
       !Object.values(personalCart).every((value) => value === null)
     ) {
       try {
-        // Make the signup API request
+        // Make the save cart API request
 
         const response = await fetch(`http://localhost:3000/cart/delete`, {
           method: "POST",
@@ -183,26 +175,6 @@ function Main() {
     }
   };
   //end
-
-  const handleChange = (event) => {
-    setForm({
-      ...form,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const response = await fetch("http://localhost:3000/business", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-      credentials: "include",
-    });
-    const newBusiness = await response.json();
-    setBusiness([newBusiness, ...business]);
-  };
-
   const handleLogout = () => {
     // Perform logout logic here
     // Example: Clear user data from localStorage, reset user state, etc.
@@ -221,7 +193,7 @@ function Main() {
     localStorage.setItem("TotalOther", String(0));
   };
 
-  //filter by category
+  //this function filter's products by category
   function filterProductsByCategory(data, category) {
     const filteredData = data.filter((data) => {
       if (data.category === category || category === "All categories") {
@@ -233,7 +205,7 @@ function Main() {
     return filteredData;
   }
 
-  //search based on name or location
+  //this function runs search based on name or location
   function runSearch(text) {
     if (text != "") {
       const inputText = text.toLowerCase();
@@ -308,6 +280,9 @@ function Main() {
             serviceWallet={serviceWallet}
             setServiceWallet={setServiceWallet}
           />
+        </div>
+        <div>
+          <Footer />
         </div>
       </div>
     </div>

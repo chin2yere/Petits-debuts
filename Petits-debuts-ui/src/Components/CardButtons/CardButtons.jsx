@@ -3,7 +3,7 @@ import "./CardButtons.css";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+//this page handles major operations done by card buttons like adding products to cart and the calendar feature
 export default function CardButtons({
   id,
   service,

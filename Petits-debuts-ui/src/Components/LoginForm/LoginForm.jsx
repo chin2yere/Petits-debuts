@@ -6,7 +6,7 @@ import {
   TotalOtherContext,
 } from "../../UserContext.js";
 import "./LoginForm.css";
-
+//this page handles user login. It collects information that is needed to make the login request
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +15,6 @@ const LoginForm = () => {
   const { TotalOther, setTotalOther } = useContext(TotalOtherContext);
 
   const navigate = useNavigate();
-  console.log(TotalOther);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -40,8 +39,6 @@ const LoginForm = () => {
         // Update the user context
         updateUser(loggedInUser);
         setTotalOther(null);
-        //localStorage.setItem("TotalOther", null);
-
         // Navigate to the home page after successful login
         navigate("/");
       } else {

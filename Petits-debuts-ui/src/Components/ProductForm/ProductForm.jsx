@@ -3,7 +3,7 @@ import "./ProductForm.css";
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext, IdContext } from "../../UserContext";
-
+//this page basically collects information that is needed to make a network call to create a new business product
 export default function ProductForm() {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
@@ -17,12 +17,14 @@ export default function ProductForm() {
   const { idContext } = useContext(IdContext);
   const navigate = useNavigate();
 
+  //this useeffect saved the id context to memory
   useEffect(() => {
     function saveIdData(data) {
       localStorage.setItem("idContext", JSON.stringify(data));
     }
     saveIdData(idContext);
   }, []);
+  //this function sets the service to true or false on select
   function serviceSetter(value) {
     if (value === "true") {
       setService(true);
@@ -30,6 +32,7 @@ export default function ProductForm() {
       setService(false);
     }
   }
+  //this function set's the user's availability on select
   function availabilitySetter(value) {
     if (value === "package 1") {
       const tempAvailability = [
@@ -43,11 +46,12 @@ export default function ProductForm() {
       setAvailability(tempAvailability);
     }
   }
+  //this function creates the new product
   const handleCreate = async (e) => {
     e.preventDefault();
 
     try {
-      // Make the login API request
+      // Make the create product API request
 
       const response = await fetch(`http://localhost:3000/product/create`, {
         method: "POST",
@@ -71,7 +75,7 @@ export default function ProductForm() {
         // Navigate to the business page after successful login
         navigate("/businessmain");
       } else {
-        // Handle the login failure case
+        // Handle the create failure case
         alert("creation failed");
       }
     } catch (error) {
@@ -79,7 +83,7 @@ export default function ProductForm() {
       alert("creation failed: " + error);
     }
   };
-  //console.log(description);
+
   return (
     <section className="productForm">
       <form onSubmit={handleCreate}>

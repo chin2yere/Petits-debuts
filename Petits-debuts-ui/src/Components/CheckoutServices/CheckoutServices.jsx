@@ -1,13 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./CheckoutServices.css";
 import {
   UserContext,
   ServiceContext,
   TotalContext,
   MoneyUpdateContext,
 } from "../../UserContext.js";
-
+//this is the checkout page for services i.e products that require scheduling
 const CheckoutServices = () => {
   const { serviceContext, setServiceContext } = useContext(ServiceContext);
   const { user, updateUser } = useContext(UserContext);

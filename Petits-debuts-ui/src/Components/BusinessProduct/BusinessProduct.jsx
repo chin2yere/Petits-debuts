@@ -3,7 +3,7 @@ import "./BusinessProduct.css";
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IdContext } from "../../UserContext";
-
+//this page designs the product card that will be displayed on the business main page
 export default function BusinessProduct({ id }) {
   const [businessProduct, setBusinessProduct] = useState([]);
   const { setIdContext } = useContext(IdContext);
@@ -11,7 +11,7 @@ export default function BusinessProduct({ id }) {
   useEffect(() => {
     const fetchProduct = async (id) => {
       try {
-        // Make the signup API request
+        // Make the fetch product API request
         const response = await fetch(
           `http://localhost:3000/mybusiness/product`,
           {
@@ -30,9 +30,8 @@ export default function BusinessProduct({ id }) {
           const data = await response.json();
           const loggedInUserProduct = data.userBusinessProduct;
           setBusinessProduct(loggedInUserProduct);
-          //console.log(loggedInUserBusiness);
         } else {
-          // Handle signup failure case
+          // Handle fetch failure case
           alert("Product access failed");
         }
       } catch (error) {
