@@ -28,6 +28,10 @@ export default function Trending({
   const { productContext } = useContext(ProductContext);
   const { TotalOther, setTotalOther } = useContext(TotalOtherContext);
   const THRESHOLD_MINIMUM_SCORE = 70;
+  const MAXIMUM_ATTAINABLE_SCORE_WITH_EMPTY_CART = 95;
+  const MAXIMUM_ATTAINABLE_SCORE_WITHOUT_RECRENT_ORDERS = 105;
+  const MAXIMUM_ATTAINABLE_SCORE_WITHOUT_RECRENT_ORDERS_AND_WITH_EMPTY_CART = 80;
+  const MAXIMUM_ATTAINABLE_SCORE_WITH_ALL_PILLARS = 120;
 
   function saveTotalOtherData(data) {
     localStorage.setItem("TotalOther", String(data));
@@ -236,27 +240,27 @@ export default function Trending({
               Object.keys(personalCart).length === 0 &&
               orderContext.length !== 0
             ) {
-              const MAXIMUM_ATTAINABLE_SCORE_WITH_EMPTY_CART = 95;
               //this part scales up the score to 120 from 95
-              score = (score * 120) / MAXIMUM_ATTAINABLE_SCORE_WITH_EMPTY_CART;
+              score =
+                (score * MAXIMUM_ATTAINABLE_SCORE_WITH_ALL_PILLARS) /
+                MAXIMUM_ATTAINABLE_SCORE_WITH_EMPTY_CART;
             } else if (
               //if the cart is empty
               Object.keys(personalCart).length !== 0 &&
               orderContext.length === 0
             ) {
-              const MAXIMUM_ATTAINABLE_SCORE_WITHOUT_RECRENT_ORDERS = 105;
               //this part scales up the score to 120 from 105
               score =
-                (score * 120) / MAXIMUM_ATTAINABLE_SCORE_WITHOUT_RECRENT_ORDERS;
+                (score * MAXIMUM_ATTAINABLE_SCORE_WITH_ALL_PILLARS) /
+                MAXIMUM_ATTAINABLE_SCORE_WITHOUT_RECRENT_ORDERS;
             } else if (
               //if no recent orders and the cart is empty
               Object.keys(personalCart).length === 0 &&
               orderContext.length === 0
             ) {
-              const MAXIMUM_ATTAINABLE_SCORE_WITHOUT_RECRENT_ORDERS_AND_WITH_EMPTY_CART = 80;
               //this part scales up the score to 120 from 80
               score =
-                (score * 120) /
+                (score * MAXIMUM_ATTAINABLE_SCORE_WITH_ALL_PILLARS) /
                 MAXIMUM_ATTAINABLE_SCORE_WITHOUT_RECRENT_ORDERS_AND_WITH_EMPTY_CART;
             }
             if (score >= THRESHOLD_MINIMUM_SCORE) {
