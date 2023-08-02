@@ -4,7 +4,7 @@ import CardButtons from "../CardButtons/CardButtons";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useState, useContext } from "react";
 import { UserContext, ProductContext } from "../../UserContext";
-
+//this page designs the product cards that is displayed on the product grid
 export default function ProductCard({
   picture_url,
   name,
@@ -48,14 +48,14 @@ export default function ProductCard({
       );
     }
   }
-  ///start
 
+  //this function makes the request to update the product likes in the database
   const updateProductLikes = async (value) => {
     const tempLikes = { ...likes };
     tempLikes[user.id] = value;
 
     try {
-      // Make the signup API request
+      // Make the likes update API request
 
       const response = await fetch(`http://localhost:3000/likes/update`, {
         method: "POST",
@@ -73,7 +73,7 @@ export default function ProductCard({
 
         setProductContext(data.response);
       } else {
-        // Handle signup failure case
+        // Handle like access failure case
         alert("Order access failed");
       }
     } catch (error) {

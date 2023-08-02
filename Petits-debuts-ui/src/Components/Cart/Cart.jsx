@@ -18,7 +18,7 @@ import hairAndNails from "../Pictures/hair-and-nails.jpg";
 import photography from "../Pictures/photography.jpeg";
 import tutoring from "../Pictures/tutoring.jpg";
 import { Link } from "react-router-dom";
-
+//this is the cart page. it is the start point of the checkout process
 export default function Cart() {
   const { productContext } = useContext(ProductContext);
   const { serviceContext, setServiceContext } = useContext(ServiceContext);
@@ -135,12 +135,12 @@ export default function Cart() {
                     return obj;
                   }
                 });
-                const eyed = product.business.userId;
+                const tempId = product.business.userId;
                 const tempval = product.price.toFixed(2) * 100;
-                if (eyed in tempMoneyContext) {
-                  tempMoneyContext[eyed] += tempval;
+                if (tempId in tempMoneyContext) {
+                  tempMoneyContext[tempId] += tempval;
                 } else {
-                  tempMoneyContext = { ...tempMoneyContext, [eyed]: tempval };
+                  tempMoneyContext = { ...tempMoneyContext, [tempId]: tempval };
                 }
 
                 grandTotalService = grandTotalService + product.price;
@@ -160,7 +160,6 @@ export default function Cart() {
             })}
           </div>
           <div className="checkout-cart">
-            <div>{console.log(tempMoneyContext)}</div>
             <h3>Total Cost: ${grandTotalService.toFixed(2)}</h3>
             <Link to={whereToNavigate(grandTotalService)}>
               <button
@@ -227,12 +226,12 @@ export default function Cart() {
                     return obj;
                   }
                 });
-                const eyed = product.business.userId;
+                const tempId = product.business.userId;
                 const tempval = (product.price * value).toFixed(2) * 100;
-                if (eyed in tempMoneyContext) {
-                  tempMoneyContext[eyed] += tempval;
+                if (tempId in tempMoneyContext) {
+                  tempMoneyContext[tempId] += tempval;
                 } else {
-                  tempMoneyContext = { ...tempMoneyContext, [eyed]: tempval };
+                  tempMoneyContext = { ...tempMoneyContext, [tempId]: tempval };
                 }
 
                 grandTotal = grandTotal + product.price * value;
@@ -252,7 +251,6 @@ export default function Cart() {
             })}
           </div>
           <div className="checkout-cart">
-            <div>{console.log(tempMoneyContext)}</div>
             <h3>Total Cost: ${grandTotal.toFixed(2)}</h3>
             <Link to={whereToNavigate(grandTotal)}>
               <button

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Success.css";
-
+//this is the successful transaction page
 export default function Success() {
   const navigate = useNavigate();
   return (

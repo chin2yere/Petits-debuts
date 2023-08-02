@@ -9,6 +9,9 @@ import {
 } from "../../UserContext";
 import { useState, useContext, useEffect } from "react";
 import trendingpic from "../Pictures/Trending-.jpg";
+//technical challenge 1
+
+//this page creates an algorithm that recommends products to users based on five pillars of product recommendability
 
 export default function Trending({
   allCarts,
@@ -24,9 +27,7 @@ export default function Trending({
   const { trending, setTrending } = useContext(TrendingContext);
   const { productContext } = useContext(ProductContext);
   const { TotalOther, setTotalOther } = useContext(TotalOtherContext);
-  //start trending
-
-  //this function updates the local storage for trending
+  const thresholdMinimumScore = 70;
 
   function saveTotalOtherData(data) {
     localStorage.setItem("TotalOther", String(data));
@@ -105,7 +106,6 @@ export default function Trending({
   useEffect(() => {
     function loopThroughOrders(top50, order, tempTrending) {
       Object.entries(order.order).map(([key, value]) => {
-        //const b = key;
         if (value != 0) {
           if (top50) {
             if (tempTrending[key].recent === 0) {
@@ -138,7 +138,7 @@ export default function Trending({
     }
   }, [productContext]);
 
-  // //end
+  //end
   // useEffect for cart // it is the third one
   useEffect(() => {
     function loopThroughCart(personalCart, tempTrending) {
@@ -216,10 +216,6 @@ export default function Trending({
     }
   }, [productContext]);
   // // //end
-  // function cutOffMark(){
-  //   if((Object.keys(personalCart).length === 0)&& orderContext.length!==0)
-  // }
-
   return (
     <div className="trending">
       <div className="card-trending">
@@ -232,23 +228,29 @@ export default function Trending({
               value.cart +
               calculateOtherScore(value.others);
             //logic for exceptions
+            //typically each product is rated on a score out of 120
+            //but an absence of one or more pillar can reduce the total score to as low as 80
+            //we have to scale up to 120 regardless because our threshold mark is 70
             if (
               Object.keys(personalCart).length === 0 &&
               orderContext.length !== 0
             ) {
+              //this part scales up the score to 120 from 80
               score = (score * 120) / 95;
             } else if (
               Object.keys(personalCart).length !== 0 &&
               orderContext.length === 0
             ) {
+              //this part scales up the score to 120 from 105
               score = (score * 120) / 105;
             } else if (
               Object.keys(personalCart).length === 0 &&
               orderContext.length === 0
             ) {
+              //this part scales up the score to 120 from 80
               score = (score * 120) / 80;
             }
-            if (score >= 70) {
+            if (score >= thresholdMinimumScore) {
               const product = productContext.find((obj) => {
                 if (obj.id.toString() === key) {
                   return obj;

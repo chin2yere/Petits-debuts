@@ -31,7 +31,7 @@ function App() {
   const [totalContext, setTotalContext] = useState(0);
   const [idContext, setIdContext] = useState(() => {
     try {
-      // Retrieve the product data from storage or set it to null if not found
+      // Retrieve the id context data from storage or set it to null if not found
       const storedid = localStorage.getItem("idContext");
       return storedid ? parseInt(storedid, 10) : null;
     } catch (error) {
@@ -42,7 +42,7 @@ function App() {
 
   const [checkoutTypeContext, setCheckoutTypeContext] = useState(() => {
     try {
-      // Retrieve the product data from storage or set it to null if not found
+      // Retrieve the checkout type data from storage or set it to null if not found
       const storedtype = localStorage.getItem("checkoutTypeContext");
       return storedtype ? parseInt(storedother, 10) : null;
     } catch (error) {
@@ -52,7 +52,7 @@ function App() {
   });
   const [moneyUpdateContext, setMoneyUpdateContext] = useState(() => {
     try {
-      // Retrieve the product data from storage or set it to null if not found
+      // Retrieve the money update data from storage or set it to null if not found
       const storedmoney = localStorage.getItem("moneyUpdateContext");
       return storedmoney ? JSON.parse(storedmoney) : null;
     } catch (error) {
@@ -62,7 +62,7 @@ function App() {
   });
   const [TotalOther, setTotalOther] = useState(() => {
     try {
-      // Retrieve the product data from storage or set it to null if not found
+      // Retrieve the total other data from storage or set it to null if not found
       const storedother = localStorage.getItem("TotalOther");
       return storedother ? parseInt(storedother, 10) : null;
     } catch (error) {
@@ -72,7 +72,7 @@ function App() {
   });
   const [trending, setTrending] = useState(() => {
     try {
-      // Retrieve the product data from storage or set it to null if not found
+      // Retrieve the trending data from storage or set it to null if not found
       const storedtrending = localStorage.getItem("trending");
       return storedtrending ? JSON.parse(storedtrending) : null;
     } catch (error) {
@@ -82,7 +82,7 @@ function App() {
   });
   const [orderContext, setOrderContext] = useState(() => {
     try {
-      // Retrieve the product data from storage or set it to null if not found
+      // Retrieve the order data from storage or set it to null if not found
       const storedOrder = localStorage.getItem("orderContext");
       return storedOrder ? JSON.parse(storedOrder) : null;
     } catch (error) {
@@ -93,7 +93,7 @@ function App() {
 
   const [cartContext, setCartContext] = useState(() => {
     try {
-      // Retrieve the product data from storage or set it to null if not found
+      // Retrieve the cart data from storage or set it to null if not found
       const storedCart = localStorage.getItem("cartContext");
       return storedCart ? JSON.parse(storedCart) : null;
     } catch (error) {
@@ -103,7 +103,7 @@ function App() {
   });
   const [serviceContext, setServiceContext] = useState(() => {
     try {
-      // Retrieve the product data from storage or set it to null if not found
+      // Retrieve the service data from storage or set it to null if not found
       const storedService = localStorage.getItem("serviceContext");
       return storedService ? JSON.parse(storedService) : null;
     } catch (error) {

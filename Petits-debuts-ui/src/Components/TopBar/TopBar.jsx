@@ -7,7 +7,7 @@ import {
   ProductContext,
 } from "../../UserContext.js";
 import { Link } from "react-router-dom";
-
+//this page designs and gives function to the top bar on the home page
 export default function TopBar({ personalCart, serviceWallet }) {
   const { setServiceContext } = useContext(ServiceContext);
   const { setCartContext } = useContext(CartContext);

@@ -1,13 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./CheckoutCart.css";
 import {
   UserContext,
   CartContext,
   TotalContext,
   MoneyUpdateContext,
 } from "../../UserContext.js";
-
+//this is the checkout page for goods i.e products that don't require scheduling
 const CheckoutCart = () => {
   const { cartContext, setCartContext } = useContext(CartContext);
   const { user, updateUser } = useContext(UserContext);
@@ -22,7 +21,7 @@ const CheckoutCart = () => {
   //network money calls
   const networkCallsForPoints = async () => {
     try {
-      // Make the signup API request
+      // Make the points API request
 
       const response = await fetch(`http://localhost:3000/money/update`, {
         method: "POST",
@@ -47,10 +46,10 @@ const CheckoutCart = () => {
       alert("money update failed: " + error);
     }
   };
-
+  //this function post's current orders to the order table
   const postOrders = async (id) => {
     try {
-      // Make the signup API request
+      // Make the post orders API request
 
       const response = await fetch(`http://localhost:3000/order/post`, {
         method: "POST",
@@ -69,10 +68,10 @@ const CheckoutCart = () => {
       alert("order creation failed: " + error);
     }
   };
-
+  //this function clears the user's cart
   const clearCart = async (id) => {
     try {
-      // Make the signup API request
+      // Make the clear user cart API request
 
       const response = await fetch(`http://localhost:3000/cart/delete`, {
         method: "POST",

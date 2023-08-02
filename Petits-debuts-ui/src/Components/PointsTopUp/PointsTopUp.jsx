@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./PointsTopUp.css";
 import { UserContext } from "../../UserContext.js";
 
 import {
@@ -8,6 +7,7 @@ import {
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+//this page handles the process of buying new points at leisure
 //this function returns the buttons
 const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
@@ -16,7 +16,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
   //this function updates the bank
   const updateBank = async () => {
     try {
-      // Make the signup API request
+      // Make the topup API request
 
       const response = await fetch(`http://localhost:3000/buyer/topup`, {
         method: "POST",
@@ -73,7 +73,6 @@ const ButtonWrapper = ({ currency, showSpinner, amount, style }) => {
               ],
             })
             .then((orderId) => {
-              // Your code here after create the order
               return orderId;
             });
         }}

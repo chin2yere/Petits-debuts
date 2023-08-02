@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./Search.css";
 import { useState, useEffect } from "react";
-
+//this page creates and handles the search bar function, and category tabs
 export default function Search({
   selectedCategory,
   setSelectedCategory,

@@ -5,7 +5,7 @@ import { UserContext, IdContext } from "../../UserContext.js";
 import businessPicture from "../Pictures/business-background.jpeg";
 import BusinessProduct from "../BusinessProduct/BusinessProduct";
 import { Link, useNavigate } from "react-router-dom";
-
+//this page displays a list of all businesses owned by the logged in user and their associated products
 export default function BusinessHome() {
   const { user } = useContext(UserContext);
   const [businesses, setBusinesses] = useState([]);
@@ -14,7 +14,7 @@ export default function BusinessHome() {
   useEffect(() => {
     const fetchBusiness = async (id) => {
       try {
-        // Make the signup API request
+        // Make the fetch user business API request
         const response = await fetch(`http://localhost:3000/mybusiness`, {
           method: "POST",
           headers: {
@@ -30,7 +30,6 @@ export default function BusinessHome() {
           const data = await response.json();
           const loggedInUserBusiness = data.userBusiness;
           setBusinesses(loggedInUserBusiness);
-          console.log(loggedInUserBusiness);
         } else {
           // Handle signup failure case
           alert("Business access failed");

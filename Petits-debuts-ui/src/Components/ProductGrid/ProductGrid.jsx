@@ -8,7 +8,7 @@ import food from "../Pictures/food.avif";
 import hairAndNails from "../Pictures/hair-and-nails.jpg";
 import photography from "../Pictures/photography.jpeg";
 import tutoring from "../Pictures/tutoring.jpg";
-
+//this page is the grid that is displayed on the main page. it is filled in by product cards and buttons
 export default function ProductGrid({
   product,
   setProduct,
@@ -30,7 +30,7 @@ export default function ProductGrid({
     };
     fetchProduct();
   }, []);
-
+  //this determines what picture goes with what product
   function setProductUrl(category) {
     if (category === "Custom Products") {
       return customProduct;
