@@ -103,37 +103,39 @@ The third part of the challenge requires me to use node-cron to send scheduled r
 Each time, there will be an api call to my orders table on my database. The code will specifically look for appointments and ignore the typical product orders. After that, all appointments will be categorized into 3 past appointments, current appointments, future appointments. past appointments will be ignored, for current appointments, and email will be sent out: You are currently on your … appointment with …, Please reach out if you have any difficulties. For future appointments, an email will be sent out: This is an email reminder for your appointment … with … at … on ….
 
 <img width="1261" alt="Screenshot 2023-08-03 at 4 42 34 PM" src="https://github.com/chin2yere/Petits-debuts/assets/80971217/b2b25855-e3c5-44ff-b01c-648de04ec64e">
-Screenshot of the recommendation's portion
+1. Screenshot of the recommendation's portion
 
-
+##
 <img width="1508" alt="Screenshot 2023-08-03 at 4 43 16 PM" src="https://github.com/chin2yere/Petits-debuts/assets/80971217/d8a4cec1-6d1f-4ac0-bfeb-5839bdaac693">
-Screenshot of the product's grid
+2. Screenshot of the product's grid
 
-
+##
 <img width="1261" alt="Screenshot 2023-08-03 at 4 53 12 PM" src="https://github.com/chin2yere/Petits-debuts/assets/80971217/f3f47262-4dfe-48c5-86cc-5e6a78d6f631">
-Screenshot of the points topup page
+3. Screenshot of the points topup page
 
+##
 <img width="1507" alt="Screenshot 2023-08-03 at 4 45 35 PM" src="https://github.com/chin2yere/Petits-debuts/assets/80971217/90a00a96-d013-42e8-b5dd-8ee9cfbd3012">
-Screenshot of the paypal payment system
+4. Screenshot of the paypal payment system
 
+##
 <img width="1494" alt="Screenshot 2023-08-03 at 4 46 23 PM" src="https://github.com/chin2yere/Petits-debuts/assets/80971217/fdf2f46f-5ed5-4742-a684-6e8e74d0b78d">
-Screenshot of the cart page
+5. Screenshot of the cart page
 
-
+##
 <img width="1495" alt="Screenshot 2023-08-03 at 4 46 37 PM" src="https://github.com/chin2yere/Petits-debuts/assets/80971217/93548150-e615-4e2a-9ae6-613f34baa435">
-Screenshot of the drop down bar on the home page
+6. Screenshot of the drop down bar on the home page
 
-
+## 
 <img width="1506" alt="Screenshot 2023-08-03 at 4 46 52 PM" src="https://github.com/chin2yere/Petits-debuts/assets/80971217/6c756d32-f7ab-4714-9256-8c82b7436b32">
-Screenshot of the business page
+7. Screenshot of the business page
 
-
+##
 <img width="1496" alt="Screenshot 2023-08-03 at 4 47 00 PM" src="https://github.com/chin2yere/Petits-debuts/assets/80971217/6cb1340a-03c4-41f3-a9fe-c0e178ae7f41">
-More screenshots of the business page
+8. More screenshots of the business page
 
-
+##
 <img width="1505" alt="Screenshot 2023-08-03 at 4 47 21 PM" src="https://github.com/chin2yere/Petits-debuts/assets/80971217/2a428d8b-b4d7-4785-9cd3-25b428271389">
-Screenshot of the "create a new product" page
+9. Screenshot of the "create a new product" page
 
 
 
